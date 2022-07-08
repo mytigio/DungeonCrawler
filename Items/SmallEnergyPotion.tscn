@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Items/Energy_Potion.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Items/flask_green.png" type="Texture" id=2]
+
+[node name="SmallEnergyPotion" type="Node2D"]
+
+[node name="Energy Potion" parent="." instance=ExtResource( 1 )]
+collision_mask = 2
+point_value = 2
+staminaBonus = 10
+
+[node name="Sprite" parent="Energy Potion" index="1"]
+texture = ExtResource( 2 )
+
+[editable path="Energy Potion"]

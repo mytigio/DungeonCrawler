@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Items/Health_Potion.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Items/flask_big_red.png" type="Texture" id=2]
+
+[node name="LargeHealPotion" type="Node2D"]
+
+[node name="Health Potion" parent="." instance=ExtResource( 1 )]
+collision_mask = 2
+point_value = 5
+healthBonus = 10
+
+[node name="Sprite" parent="Health Potion" index="1"]
+texture = ExtResource( 2 )
+
+[editable path="Health Potion"]

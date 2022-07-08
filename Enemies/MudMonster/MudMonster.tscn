@@ -1,0 +1,118 @@
+[gd_scene load_steps=21 format=2]
+
+[ext_resource path="res://HitBoxes_HurtBoxes/SoftCollision.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Enemies/MudMonster/MudMonster.png" type="Texture" id=2]
+[ext_resource path="res://Stats.tscn" type="PackedScene" id=4]
+[ext_resource path="res://HitBoxes_HurtBoxes/Hitbox.tscn" type="PackedScene" id=5]
+[ext_resource path="res://HitBoxes_HurtBoxes/HurtBox.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Enemies/Enemy.gd" type="Script" id=7]
+[ext_resource path="res://Effects/BlinkAnimationPlayer.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Enemies/WanderController.tscn" type="PackedScene" id=9]
+[ext_resource path="res://HitBoxes_HurtBoxes/DetectionBox.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Shaders/WhiteShader.tres" type="Material" id=11]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 7.0
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 7.0
+
+[sub_resource type="CircleShape2D" id=3]
+radius = 8.06226
+
+[sub_resource type="AtlasTexture" id=4]
+atlas = ExtResource( 2 )
+region = Rect2( 0, 0, 16, 24 )
+
+[sub_resource type="AtlasTexture" id=5]
+atlas = ExtResource( 2 )
+region = Rect2( 16, 0, 16, 24 )
+
+[sub_resource type="AtlasTexture" id=6]
+atlas = ExtResource( 2 )
+region = Rect2( 32, 0, 16, 24 )
+
+[sub_resource type="AtlasTexture" id=7]
+atlas = ExtResource( 2 )
+region = Rect2( 48, 0, 16, 24 )
+
+[sub_resource type="SpriteFrames" id=8]
+animations = [ {
+"frames": [ SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ) ],
+"loop": true,
+"name": "Move",
+"speed": 5.0
+} ]
+
+[sub_resource type="CircleShape2D" id=9]
+radius = 5.09902
+
+[sub_resource type="CircleShape2D" id=10]
+resource_local_to_scene = true
+radius = 128.0
+
+[node name="MudMonster" type="KinematicBody2D"]
+material = ExtResource( 11 )
+collision_layer = 16
+script = ExtResource( 7 )
+MAX_SPEED = 15
+ACCELERATION = 25
+FRICTION = 100
+
+[node name="BlinkAnimationPlayer" parent="." instance=ExtResource( 8 )]
+
+[node name="SoftCollision" parent="." instance=ExtResource( 1 )]
+
+[node name="CollisionShape2D" parent="SoftCollision" index="0"]
+shape = SubResource( 1 )
+
+[node name="Hitbox" parent="." instance=ExtResource( 5 )]
+collision_mask = 4
+
+[node name="CollisionShape2D" parent="Hitbox" index="0"]
+shape = SubResource( 2 )
+
+[node name="HurtBox" parent="." instance=ExtResource( 6 )]
+collision_layer = 8
+effect_offset = Vector2( 0, -2 )
+
+[node name="CollisionShape2D" parent="HurtBox" index="0"]
+shape = SubResource( 3 )
+
+[node name="Sprite" type="AnimatedSprite" parent="."]
+material = ExtResource( 11 )
+frames = SubResource( 8 )
+animation = "Move"
+frame = 2
+playing = true
+offset = Vector2( 0, -8 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 9 )
+
+[node name="Stats" parent="." instance=ExtResource( 4 )]
+max_health = 6
+max_stamina = 5
+
+[node name="WanderController" parent="." instance=ExtResource( 9 )]
+wander_range = 16
+timer_min_time = 3
+timer_max_time = 6
+
+[node name="DetectionBox" parent="." instance=ExtResource( 10 )]
+collision_mask = 2
+
+[node name="CollisionShape2D" parent="DetectionBox" index="0"]
+shape = SubResource( 10 )
+
+[connection signal="area_entered" from="HurtBox" to="." method="_on_HurtBox_area_entered"]
+[connection signal="invincibility_ended" from="HurtBox" to="." method="_on_HurtBox_invincibility_ended"]
+[connection signal="invincibility_started" from="HurtBox" to="." method="_on_HurtBox_invincibility_started"]
+[connection signal="no_health" from="Stats" to="." method="_on_Stats_no_health"]
+[connection signal="body_entered" from="DetectionBox" to="." method="_on_DetectionBox_body_entered"]
+[connection signal="body_exited" from="DetectionBox" to="." method="_on_DetectionBox_body_exited"]
+
+[editable path="SoftCollision"]
+[editable path="Hitbox"]
+[editable path="HurtBox"]
+[editable path="DetectionBox"]

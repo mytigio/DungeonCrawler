@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Items/PlusStaminaItem.gd" type="Script" id=1]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 5, 7 )
+
+[node name="Energy Potion" type="Area2D"]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource( 1 )
+point_value = 5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0, 1 )
+shape = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="."]
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

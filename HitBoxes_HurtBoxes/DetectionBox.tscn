@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=2]
+
+[sub_resource type="CircleShape2D" id=1]
+resource_local_to_scene = true
+radius = 128.0
+
+[node name="DetectionBox" type="Area2D"]
+light_mask = 0
+collision_layer = 0
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+modulate = Color( 1, 1, 1, 0.443137 )
+light_mask = 0
+shape = SubResource( 1 )
