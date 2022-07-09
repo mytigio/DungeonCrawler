@@ -12,6 +12,10 @@
 [ext_resource path="res://Items/IronMace.png" type="Texture" id=10]
 [ext_resource path="res://Items/SwingingWeapon.tscn" type="PackedScene" id=11]
 
+
+
+
+
 [sub_resource type="ShaderMaterial" id=2]
 shader = ExtResource( 9 )
 shader_param/active = false
