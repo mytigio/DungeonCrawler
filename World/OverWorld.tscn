@@ -1,4 +1,4 @@
-[gd_scene load_steps=73 format=2]
+[gd_scene load_steps=74 format=2]
 
 [ext_resource path="res://World/Bush.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://World/Tree.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Enemies/MudMonster/MudMonster.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Player/PlayerCamera.tscn" type="PackedScene" id=11]
+[ext_resource path="res://WhiteColor.gdshader" type="Shader" id=12]
 [ext_resource path="res://World/Dungeon/DungeonEntrance.tscn" type="PackedScene" id=13]
 [ext_resource path="res://Enemies/LargeOrc/LargeOrc.tscn" type="PackedScene" id=14]
 [ext_resource path="res://Enemies/SlimeMonster/SlimeMonster.tscn" type="PackedScene" id=15]
@@ -494,12 +495,18 @@ points = PoolVector2Array( 0, 0, 0, 0, 32, 0, 32, 32, 0, 32 )
 
 [sub_resource type="ShaderMaterial" id=50]
 resource_local_to_scene = true
+shader = ExtResource( 12 )
+shader_param/active = false
 
 [sub_resource type="ShaderMaterial" id=51]
 resource_local_to_scene = true
+shader = ExtResource( 12 )
+shader_param/active = false
 
 [sub_resource type="ShaderMaterial" id=52]
 resource_local_to_scene = true
+shader = ExtResource( 12 )
+shader_param/active = false
 
 [sub_resource type="CircleShape2D" id=53]
 resource_local_to_scene = true
@@ -507,9 +514,13 @@ radius = 256.0
 
 [sub_resource type="ShaderMaterial" id=54]
 resource_local_to_scene = true
+shader = ExtResource( 12 )
+shader_param/active = false
 
 [sub_resource type="ShaderMaterial" id=55]
 resource_local_to_scene = true
+shader = ExtResource( 12 )
+shader_param/active = false
 
 [node name="OverWorld" type="Node2D"]
 scale = Vector2( 0.99492, 1 )
@@ -571,7 +582,7 @@ summonOptions = [ ExtResource( 17 ), ExtResource( 14 ) ]
 
 [node name="Sprite" parent="SpriteLayer/DarkWizard" index="5"]
 material = SubResource( 52 )
-frame = 3
+frame = 0
 
 [node name="Stats" parent="SpriteLayer/DarkWizard" index="7"]
 level = 5
