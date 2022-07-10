@@ -1,11 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://UI/screens/MultiplayerSetup/JoinServerMenu/CancelButton.gd" type="Script" id=1]
-[ext_resource path="res://LobbyManager.gd" type="Script" id=2]
 [ext_resource path="res://UI/screens/MultiplayerSetup/JoinServerMenu/JoinServerButton.gd" type="Script" id=3]
 
 [node name="JoinServerMenu" type="Control"]
-script = ExtResource( 2 )
 
 [node name="ColorRect" type="ColorRect" parent="."]
 margin_right = 321.0

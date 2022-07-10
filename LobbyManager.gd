@@ -15,7 +15,7 @@ func _ready():
 # Player info, associate ID to data
 var player_info = {}
 # Info we send to other players
-var my_info = { name = "Leroy Jenkins", favorite_color = Color8(255, 0, 255) }
+var my_info = { name = str(randf()), favorite_color = Color8(255, 0, 255) }
 
 func _player_connected(id):
 	print("player connected:", id)
@@ -28,7 +28,6 @@ func _player_disconnected(id):
 
 # Only called on clients, not server. Will go unused; not useful here.
 func _connected_ok():
-	var peer = get_tree().get_network_peer()
 	print("connected!")
 	get_tree().change_scene(GameManager.LOBBY_SCENE)
 

@@ -21,8 +21,7 @@ config/icon="res://icon.png"
 [autoload]
 
 PlayerStats="*res://Player/PlayerStats.tscn"
-GameManager="*res://World/GameManager.tscn"
-NetworkManager="*res://NetworkManager.tscn"
+GameManager="*res://GameManager.tscn"
 LobbyManager="*res://LobbyManager.tscn"
 
 [display]
