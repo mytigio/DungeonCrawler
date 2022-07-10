@@ -69,9 +69,12 @@ func move_state(delta):
 		state = ATTACK
 	
 	if (Input.is_action_just_pressed("escape_menu")):
-		print("escape menu triggered")
 		var escapeOverlay = get_node("/root/OverWorld/CanvasLayer/PauseMenu/Popup")
-		escapeOverlay.show()
+		print("escape menu triggered")
+		if (!escapeOverlay.visible):
+			escapeOverlay.show()
+		else:
+			escapeOverlay.hide()
 
 
 func can_roll():
