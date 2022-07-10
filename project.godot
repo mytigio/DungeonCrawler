@@ -15,13 +15,14 @@ _global_script_class_icons={
 [application]
 
 config/name="Legends of Taloth"
-run/main_scene="res://World/OverWorld.tscn"
+run/main_scene="res://UI/screens/MultiplayerSetup/MultiplayerSetup.tscn"
 config/icon="res://icon.png"
 
 [autoload]
 
 PlayerStats="*res://Player/PlayerStats.tscn"
 GameManager="*res://World/GameManager.tscn"
+NetworkManager="*res://NetworkManager.tscn"
 
 [display]
 
@@ -101,6 +102,12 @@ roll={
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":75,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
 , Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777237,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
 , Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":0,"button_index":1,"pressure":0.0,"pressed":false,"script":null)
+ ]
+}
+escape_menu={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":0,"physical_scancode":16777217,"unicode":0,"echo":false,"script":null)
+, Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":0,"button_index":11,"pressure":0.0,"pressed":false,"script":null)
  ]
 }
 

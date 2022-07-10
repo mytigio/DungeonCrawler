@@ -67,6 +67,10 @@ func move_state(delta):
 	
 	if (Input.is_action_just_pressed("attack")):
 		state = ATTACK
+	
+	if (Input.is_action_just_pressed("escape_menu")):
+		print("escape menu triggered")
+
 
 func can_roll():
 	return (state != ROLL and stats.stamina >= ROLL_STAMINA_COST)
