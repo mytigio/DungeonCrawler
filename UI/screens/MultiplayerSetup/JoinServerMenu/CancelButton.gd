@@ -11,7 +11,8 @@ func _ready():
 
 func _button_pressed():
 	#update this scene to be the lobby and wait for folks to join
-	get_tree().change_scene("res://UI/screens/MultiplayerSetup/MultiplayerSetup.tscn")
+	get_tree().network_peer = null
+	get_tree().change_scene(GameManager.MULTIPLAYER_MENU)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):

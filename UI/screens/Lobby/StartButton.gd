@@ -4,14 +4,16 @@ extends Button
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	self.connect("pressed", self, "_button_pressed")
-	#createServerButton.connect("pressed", self, "_button_pressed")
-	
-	
+
 func _button_pressed():
-	get_tree().change_scene(GameManager.JOIN_SERVER_SCENE)
+	get_tree().network_peer = null
+	get_tree().change_scene(GameManager.OVERWORLD_SCENE)
+
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):

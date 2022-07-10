@@ -5,6 +5,15 @@ var level = 0 setget set_level
 var levelSeed = 0
 var points = 0 setget set_points
 
+var SERVER_PORT = 444
+var MAX_PLAYERS = 4
+
+var MULTIPLAYER_MENU = "res://UI/screens/MultiplayerSetup/MultiplayerSetup.tscn"
+var LOBBY_SCENE = "res://UI/screens/Lobby/lobbyMenu.tscn"
+var JOIN_SERVER_SCENE = "res://UI/screens/MultiplayerSetup/JoinServerMenu/JoinServerMenu.tscn"
+var OVERWORLD_SCENE = "res://World/OverWorld.tscn"
+
+
 signal level_changed(level)
 signal points_changed(points)
 
@@ -21,6 +30,7 @@ func add_points(value):
 	self.points = totalPoints
 	
 func _ready():
+	print("game manage ready")
 	if (initial_seed == 0):
 		randomize()
 		initial_seed = randi()

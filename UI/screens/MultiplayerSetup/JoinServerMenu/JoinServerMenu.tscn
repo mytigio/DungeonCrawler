@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://UI/screens/MultiplayerSetup/JoinServerMenu/CancelButton.gd" type="Script" id=1]
-[ext_resource path="res://World/Lobby.gd" type="Script" id=2]
+[ext_resource path="res://LobbyManager.gd" type="Script" id=2]
+[ext_resource path="res://UI/screens/MultiplayerSetup/JoinServerMenu/JoinServerButton.gd" type="Script" id=3]
 
 [node name="JoinServerMenu" type="Control"]
 script = ExtResource( 2 )
@@ -46,7 +47,7 @@ margin_right = 224.897
 margin_bottom = 68.2541
 text = "444"
 
-[node name="IPTextBox2" type="TextEdit" parent="."]
+[node name="StatusTextBox" type="TextEdit" parent="."]
 margin_left = 117.0
 margin_top = 118.0
 margin_right = 302.0
@@ -60,6 +61,7 @@ margin_top = 82.6381
 margin_right = 150.897
 margin_bottom = 102.638
 text = "Connect"
+script = ExtResource( 3 )
 
 [node name="CancelButton" type="Button" parent="."]
 margin_left = 212.897

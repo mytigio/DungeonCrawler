@@ -1,19 +1,23 @@
 extends Button
 
+
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
-
-# Called when the node enters the scene tree for the first time.
 func _ready():
 	self.connect("pressed", self, "_button_pressed")
 
 func _button_pressed():
-	print("Create Server code...")
+	var ip = get_node("../IPTextBox").text
+	var port = int(get_node("../PortTextBox").text)
+	var status = get_node("../StatusTextBox")
+	
 	var peer = NetworkedMultiplayerENet.new()
-	peer.create_server(GameManager.SERVER_PORT, GameManager.MAX_PLAYERS)
-	print("server lisenting on: ", GameManager.SERVER_PORT)
-	get_tree().change_scene("res://UI/screens/Lobby/lobbyMenu.tscn")
+	var connectionStatus = peer.create_client(ip, port)
+	#NetworkManager.connectToServer(ip, port)
+	status.text = "connecting..." + str(connectionStatus)
+		
+	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):

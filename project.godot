@@ -23,6 +23,7 @@ config/icon="res://icon.png"
 PlayerStats="*res://Player/PlayerStats.tscn"
 GameManager="*res://World/GameManager.tscn"
 NetworkManager="*res://NetworkManager.tscn"
+LobbyManager="*res://LobbyManager.tscn"
 
 [display]
 
