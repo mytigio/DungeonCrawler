@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://UI/screens/PauseMenu/ResumeButton.gd" type="Script" id=1]
+[ext_resource path="res://UI/screens/PauseMenu/QuitButton.gd" type="Script" id=2]
 
 [node name="PauseMenu" type="Control"]
 pause_mode = 2
@@ -21,6 +22,7 @@ margin_top = 60.1404
 margin_right = 160.0
 margin_bottom = 80.1404
 text = "Quit"
+script = ExtResource( 2 )
 
 [node name="ResumeButton" type="Button" parent="popup"]
 anchor_left = 0.5

@@ -11,9 +11,6 @@ func _ready():
 	self.connect("pressed", self, "_button_pressed")
 
 
-	#createServerButton.connect("pressed", self, "_button_pressed")
-	
-	
 func _button_pressed():
 	get_parent().hide()
 	get_tree().paused = false
