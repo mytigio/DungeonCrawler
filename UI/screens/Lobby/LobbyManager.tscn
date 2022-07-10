@@ -2,5 +2,5 @@
 
 [ext_resource path="res://World/Lobby.gd" type="Script" id=1]
 
-[node name="Lobby" type="Node"]
+[node name="LobbyManager" type="Node"]
 script = ExtResource( 1 )

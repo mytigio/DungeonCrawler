@@ -1,0 +1,70 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://UI/screens/MultiplayerSetup/JoinServerMenu/CancelButton.gd" type="Script" id=1]
+[ext_resource path="res://World/Lobby.gd" type="Script" id=2]
+
+[node name="JoinServerMenu" type="Control"]
+script = ExtResource( 2 )
+
+[node name="ColorRect" type="ColorRect" parent="."]
+margin_right = 321.0
+margin_bottom = 178.0
+color = Color( 0.780392, 0, 0.890196, 1 )
+
+[node name="ServerIPLabel" type="RichTextLabel" parent="."]
+margin_left = 19.0
+margin_top = 14.0
+margin_right = 102.0
+margin_bottom = 36.0
+text = "Server IP: "
+
+[node name="ServerPortLabel" type="RichTextLabel" parent="."]
+margin_left = 19.0
+margin_top = 48.2541
+margin_right = 110.0
+margin_bottom = 69.2541
+text = "Server Port: "
+
+[node name="StatusLabel" type="RichTextLabel" parent="."]
+margin_left = 19.0
+margin_top = 118.0
+margin_right = 110.0
+margin_bottom = 139.0
+text = "Status:"
+
+[node name="IPTextBox" type="TextEdit" parent="."]
+margin_left = 115.897
+margin_top = 14.0
+margin_right = 224.897
+margin_bottom = 34.0
+text = "127.0.0.1"
+
+[node name="PortTextBox" type="TextEdit" parent="."]
+margin_left = 115.897
+margin_top = 48.2541
+margin_right = 224.897
+margin_bottom = 68.2541
+text = "444"
+
+[node name="IPTextBox2" type="TextEdit" parent="."]
+margin_left = 117.0
+margin_top = 118.0
+margin_right = 302.0
+margin_bottom = 169.0
+text = "..."
+readonly = true
+
+[node name="JoinServerButton" type="Button" parent="."]
+margin_left = 115.897
+margin_top = 82.6381
+margin_right = 150.897
+margin_bottom = 102.638
+text = "Connect"
+
+[node name="CancelButton" type="Button" parent="."]
+margin_left = 212.897
+margin_top = 82.6381
+margin_right = 276.897
+margin_bottom = 102.638
+text = "Cancel"
+script = ExtResource( 1 )
