@@ -6,6 +6,7 @@ export(int) var dungeonLevel = 1
 func _on_DungeonEntrance_body_entered(body):
 	if (active):
 		GameManager.level += dungeonLevel
+		GameManager.overworld_entrance_position = global_position
 		GameManager.levelSeed = (str(GameManager.initial_seed)+"_"+str(global_position)+"_"+str(dungeonLevel)).hash()
 		get_tree().change_scene("res://World/Dungeon/Dungeon.tscn")
 

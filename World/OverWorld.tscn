@@ -589,7 +589,7 @@ summonOptions = [ ExtResource( 17 ), ExtResource( 14 ) ]
 
 [node name="Sprite" parent="SpriteLayer/DarkWizard" index="5"]
 material = SubResource( 52 )
-frame = 3
+frame = 2
 
 [node name="Stats" parent="SpriteLayer/DarkWizard" index="7"]
 level = 5
