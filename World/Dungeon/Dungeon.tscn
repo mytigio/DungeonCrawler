@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://World/Dungeon/Dungeon.gd" type="Script" id=1]
 [ext_resource path="res://World/Dungeon/DungeonTileSet32x32.tres" type="TileSet" id=2]
@@ -17,6 +17,7 @@
 [ext_resource path="res://Enemies/Bat/Bat.tscn" type="PackedScene" id=15]
 [ext_resource path="res://Enemies/LargeOrc/LargeOrc.tscn" type="PackedScene" id=16]
 [ext_resource path="res://Music and Sounds/Fantasy Choir 1.wav" type="AudioStream" id=17]
+[ext_resource path="res://Effects/Light.png" type="Texture" id=18]
 
 [sub_resource type="Gradient" id=1]
 offsets = PoolRealArray(  )
@@ -56,6 +57,15 @@ position = Vector2( -1648, -1104 )
 [node name="Player" parent="YSort" instance=ExtResource( 7 )]
 position = Vector2( 8, 8 )
 
+[node name="Light2D" type="Light2D" parent="YSort/Player"]
+position = Vector2( 0, -11 )
+scale = Vector2( 1.01769, 1.14977 )
+texture = ExtResource( 18 )
+color = Color( 0.733333, 0.65098, 0.458824, 1 )
+shadow_enabled = true
+shadow_color = Color( 0, 0, 0, 1 )
+shadow_filter_smooth = 0.3
+
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="YSort/Player"]
 remote_path = NodePath("../../../PlayerCamera")
 
@@ -87,6 +97,9 @@ cell_y_sort = true
 
 [node name="DecorationsMap" parent="YSort/ProceduralMazeLevel" index="2"]
 tile_data = PoolIntArray( 196613, 30, 0, 196615, 29, 0, 196616, 29, 0, 196617, 27, 0, 196618, 27, 0, 196619, 30, 0, 262149, 27, 0, 262152, 25, 0, 262155, 26, 0, 327685, 27, 0, 327688, 25, 0, 327691, 25, 0, 393221, 29, 0, 393222, 25, 0, 393223, 25, 0, 393225, 29, 0, 393226, 29, 0, 393227, 28, 0, 458757, 30, 0, 524293, 30, 0, 524296, 26, 0, 524299, 27, 0, 589829, 26, 0, 589830, 30, 0, 589831, 28, 0, 589832, 26, 0, 589833, 26, 0, 589834, 28, 0, 589835, 27, 0 )
+
+[node name="CanvasModulate" type="CanvasModulate" parent="YSort"]
+color = Color( 0, 0, 0, 1 )
 
 [node name="Entrances" type="YSort" parent="YSort"]
 
