@@ -5,7 +5,6 @@ const Player = preload("../Player/Player.gd")
 
 onready var player = $SpriteLayer/Player as Player
 onready var entrance = $OverworldDungeonEntrance
-onready var enterDialog = $CanvasLayer/ConfirmationDialog
 
 
 # Called when the node enters the scene tree for the first time.

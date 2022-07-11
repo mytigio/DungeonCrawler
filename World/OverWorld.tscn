@@ -1,4 +1,4 @@
-[gd_scene load_steps=75 format=2]
+[gd_scene load_steps=81 format=2]
 
 [ext_resource path="res://World/Bush.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=2]
@@ -18,7 +18,13 @@
 [ext_resource path="res://Enemies/DarkWizard/DarkWizard.tscn" type="PackedScene" id=16]
 [ext_resource path="res://Enemies/TinyDemon/TinyDemon.tscn" type="PackedScene" id=17]
 [ext_resource path="res://World/Dungeon/DungeonTileSet32x32.tres" type="TileSet" id=18]
+[ext_resource path="res://Items/RustySword.tscn" type="PackedScene" id=19]
 [ext_resource path="res://World/OverWorld.gd" type="Script" id=20]
+[ext_resource path="res://Items/SteelMace.tscn" type="PackedScene" id=21]
+[ext_resource path="res://Items/GoldenSword.tscn" type="PackedScene" id=22]
+[ext_resource path="res://Items/IronSword.tscn" type="PackedScene" id=23]
+[ext_resource path="res://Items/SteelClaymore.tscn" type="PackedScene" id=24]
+[ext_resource path="res://Items/SteelAxe.tscn" type="PackedScene" id=25]
 
 [sub_resource type="TileSet" id=1]
 0/name = "DirtTileset.png 0"
@@ -524,6 +530,7 @@ shader = ExtResource( 12 )
 shader_param/active = false
 
 [node name="OverWorld" type="Node2D"]
+position = Vector2( -48, -192 )
 scale = Vector2( 0.99492, 1 )
 script = ExtResource( 20 )
 
@@ -580,7 +587,7 @@ summonOptions = [ ExtResource( 17 ), ExtResource( 14 ) ]
 
 [node name="Sprite" parent="SpriteLayer/DarkWizard" index="5"]
 material = SubResource( 52 )
-frame = 3
+frame = 0
 
 [node name="Stats" parent="SpriteLayer/DarkWizard" index="7"]
 level = 5
@@ -706,18 +713,29 @@ position = Vector2( 48.2451, 304 )
 
 [node name="HealthUI" parent="CanvasLayer" instance=ExtResource( 8 )]
 
-[node name="ConfirmationDialog" type="ConfirmationDialog" parent="CanvasLayer"]
-margin_right = 200.0
-margin_bottom = 70.0
-window_title = "Enter dungeon?"
-dialog_text = "Enter dungeon?"
-
 [node name="SlimeMonster" parent="." instance=ExtResource( 15 )]
 material = SubResource( 55 )
 position = Vector2( 136.694, 88 )
 
+[node name="RustySwordPickup" parent="." instance=ExtResource( 19 )]
+position = Vector2( 120.613, 232 )
+
+[node name="RustyMacePickup" parent="." instance=ExtResource( 21 )]
+position = Vector2( 152.776, 232 )
+
+[node name="GoldenSwordPickup" parent="." instance=ExtResource( 22 )]
+position = Vector2( 120.613, 280 )
+
+[node name="IronSwordPickup" parent="." instance=ExtResource( 23 )]
+position = Vector2( 120.613, 256 )
+
+[node name="SteelClaymorePickup" parent="." instance=ExtResource( 24 )]
+position = Vector2( 176.899, 232 )
+
+[node name="SteelAxePickup" parent="." instance=ExtResource( 25 )]
+position = Vector2( 168.858, 264 )
+
 [connection signal="body_entered" from="OverworldDungeonEntrance" to="." method="_on_OverworldDungeonEntrance_body_entered"]
-[connection signal="confirmed" from="CanvasLayer/ConfirmationDialog" to="." method="_on_ConfirmationDialog_confirmed"]
 
 [editable path="PlayerCamera"]
 [editable path="SpriteLayer/DarkWizard"]

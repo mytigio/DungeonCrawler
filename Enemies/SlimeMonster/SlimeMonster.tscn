@@ -86,7 +86,7 @@ shape = SubResource( 3 )
 material = ExtResource( 11 )
 frames = SubResource( 8 )
 animation = "Move"
-frame = 1
+frame = 2
 playing = true
 offset = Vector2( 0, -8 )
 

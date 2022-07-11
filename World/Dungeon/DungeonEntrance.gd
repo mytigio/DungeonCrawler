@@ -1,6 +1,6 @@
 extends Area2D
 
-var active = false
+var active = true
 export(int) var dungeonLevel = 1
 
 func _on_DungeonEntrance_body_entered(body):

@@ -116,7 +116,6 @@ color = Color( 0, 0, 0, 1 )
 [node name="StatsUI" parent="CanvasLayer" instance=ExtResource( 8 )]
 
 [node name="ConfirmExit" type="ConfirmationDialog" parent="CanvasLayer"]
-visible = true
 margin_left = 88.0
 margin_top = 64.0
 margin_right = 267.0
