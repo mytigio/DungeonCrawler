@@ -102,6 +102,7 @@ func setLevel(level: int):
 func _on_HurtBox_area_entered(area):
 	if (hurtBox.invincible == false):
 		knockback = area.knockback_vector * 130
+		print("area.current_damage: " + str(area.current_damage))
 		stats.health -= area.current_damage
 		hurtBox.start_invicibility(0.5)
 		hurtBox.create_hit_effect()
