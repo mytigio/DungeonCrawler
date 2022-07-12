@@ -12,7 +12,6 @@ onready var treasuresContainer = $YSort/Treasures
 onready var enemyContainer = $YSort/Enemies
 
 export(int) var backgroundBuffer = 10
-
 var textureScale = 0.7
 
 func _ready():
@@ -56,20 +55,20 @@ func _on_ProceduralMazeLevel_addExits(positions):
 		exitsContainer.add_child(exit)
 		
 
-func _on_ProceduralMazeLevel_addTreasure(positions):
+func _on_ProceduralMazeLevel_addTreasure(positions, rng: RandomNumberGenerator):
 	if (mapMaker.treasureOptions.size() > 0):
 		var filteredOptions = getValidArrayIndexes(GameManager.level, mapMaker.treasureSpawnLevels)
 		for position in positions:
-			var type = mapMaker.treasureOptions[filteredOptions[randi() % filteredOptions.size()]]
+			var type = mapMaker.treasureOptions[filteredOptions[rng.randi() % filteredOptions.size()]]
 			var treasure = type.instance()
 			treasure.position = position
 			treasuresContainer.add_child(treasure)
 
-func _on_ProceduralMazeLevel_addEnemies(positions):		
+func _on_ProceduralMazeLevel_addEnemies(positions, rng: RandomNumberGenerator):		
 	if (mapMaker.enemyOptions.size() > 0):
 		var filteredEnemyOptions = getValidArrayIndexes(GameManager.level, mapMaker.enemySpawnLevels)
 		for position in positions:
-			var enemyType = mapMaker.enemyOptions[filteredEnemyOptions[randi() % filteredEnemyOptions.size()]]
+			var enemyType = mapMaker.enemyOptions[filteredEnemyOptions[rng.randi() % filteredEnemyOptions.size()]]
 			var enemy = enemyType.instance()
 			enemy.setLevel(GameManager.level)
 			enemy.position = position

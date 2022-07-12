@@ -588,7 +588,6 @@ summonOptions = [ ExtResource( 17 ), ExtResource( 14 ) ]
 
 [node name="Sprite" parent="SpriteLayer/DarkWizard" index="5"]
 material = SubResource( 52 )
-frame = 3
 
 [node name="Stats" parent="SpriteLayer/DarkWizard" index="7"]
 level = 5
@@ -708,8 +707,8 @@ position = Vector2( 208, 8 )
 position = Vector2( 304, 104 )
 
 [node name="OverworldDungeonEntrance" parent="." instance=ExtResource( 13 )]
-position = Vector2( 48.2451, 304 )
-dungeonLevel = 10
+position = Vector2( 48, 304 )
+dungeonLevel = 20
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
