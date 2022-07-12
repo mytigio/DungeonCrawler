@@ -8,6 +8,10 @@ var health = max_health setget set_health
 export(int) var max_stamina = 1 setget set_max_stamina
 var stamina = max_stamina setget set_stamina
 
+export(Texture) var weapon_texture: Texture = null
+export(int) var weapon_stamina_cost = 0
+export(int) var weapon_damage = 1
+
 export(int) var point_value = 5
 
 signal no_health

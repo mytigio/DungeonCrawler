@@ -86,7 +86,6 @@ func make_maze():
 			Map.set_cellv(current, current_walls)
 			Map.set_cellv(next, next_walls)
 			var offset = dir/spacing
-			print(offset)
 			for space in spacing:
 				if (dir.x != 0):
 					Map.set_cellv(current + (offset*space), 5) #add vertical connector
@@ -137,7 +136,6 @@ func setExitPositions(availablePositions):
 		exitPos *= tile_size
 		exits.append(mapOffset+exitPos)
 	
-	print("Exits placed at: "+str(exits))
 	emit_signal("addExits", exits)
 
 func setTreasurePositions(availablePositions):
@@ -150,7 +148,6 @@ func setTreasurePositions(availablePositions):
 		treasurePos *= tile_size
 		treasures.append(mapOffset+treasurePos)
 	
-	print("Treasure placed at: "+str(treasures))
 	emit_signal("addTreasure", treasures)
 
 func setEnemyPositions(availablePositions):
@@ -163,7 +160,6 @@ func setEnemyPositions(availablePositions):
 		enemyPos *= tile_size
 		enemies.append(mapOffset+enemyPos)
 		
-	print("Enemies placed at: "+str(enemies))
 	emit_signal("addEnemies", enemies)
 
 func predictable_shuffle(arrayToShuffle):

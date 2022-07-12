@@ -22,12 +22,14 @@ var rolling = false
 onready var animationPlayer = $AnimationPlayer
 onready var animationTree = $AnimationTree
 onready var animationState = animationTree.get("parameters/playback")
+onready var sword = $SwingingWeapon as Sprite
 onready var swordHitbox = $SwingingWeapon/Hitbox
 onready var hurtBox = $HurtBox
 onready var blinkPlayer = $FlashAnimationPlayer
 
 func _ready():
 	stats.connect("no_health", self, "queue_free")
+	set_weapon_info()
 	animationTree.active = true
 	swordHitbox.knockback_vector = roll_vector
 	
@@ -76,6 +78,12 @@ func move_state(delta):
 		else:
 			escapeOverlay.hide()
 
+
+func set_weapon_info():
+	sword.texture = stats.weapon_texture
+	swordHitbox.stamina_cost = stats.weapon_stamina_cost
+	swordHitbox.damage = stats.weapon_damage
+	swordHitbox.current_damage = stats.weapon_damage
 
 func can_roll():
 	return (state != ROLL and stats.stamina >= ROLL_STAMINA_COST)

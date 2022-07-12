@@ -175,7 +175,6 @@ func placeFloorTile(cell):
 	Map.set_cellv(cell, floorTile)
 	var decoration = pickFloorDecoration()
 	if (decoration >= 0):
-		print("adding decoration "+str(decoration)+" to cell "+str(cell))
 		DecorationsMap.set_cellv(cell,decoration)
 
 func erase_walls():
@@ -352,7 +351,6 @@ func setExitPositions(availablePositions):
 	for exit in exitCount:
 		var exitPos = availablePositions.pop_front()
 		var exitData = cell_properties[exitPos]
-		print("exit data: "+str(exitData))
 		var exitScene = exit_cells[exitData]
 		#placeholder for a moment.
 		Map.set_cellv(exitPos, exitScene)

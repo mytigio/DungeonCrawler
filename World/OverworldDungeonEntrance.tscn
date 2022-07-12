@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://World/OverworldDungeonEntrance.gd" type="Script" id=1]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 8, 8 )
+
+[node name="OverworldDungeonEntrance" type="Area2D"]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource( 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ConfirmationDialog" type="ConfirmationDialog" parent="CanvasLayer"]
+margin_right = 200.0
+margin_bottom = 70.0
+dialog_text = "Enter dungeon?"
+
+[connection signal="confirmed" from="CanvasLayer/ConfirmationDialog" to="." method="_on_ConfirmationDialog_confirmed"]
