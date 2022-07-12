@@ -69,6 +69,15 @@ func move_state(delta):
 	
 	if (Input.is_action_just_pressed("attack")):
 		state = ATTACK
+	
+	if (Input.is_action_just_pressed("escape_menu")):
+		var escapeOverlay = get_node("/root/OverWorld/CanvasLayer/PauseMenu/Popup")
+		print("escape menu triggered")
+		if (!escapeOverlay.visible):
+			escapeOverlay.show()
+		else:
+			escapeOverlay.hide()
+
 
 func set_weapon_info():
 	sword.texture = stats.weapon_texture
