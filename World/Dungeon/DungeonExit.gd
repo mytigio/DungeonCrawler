@@ -1,6 +1,5 @@
 extends Area2D
 
-var Dungeon = load("res://World/Dungeon.tscn")
 var active = false
 
 signal exit_dungeon(body)
