@@ -161,12 +161,8 @@ func make_maze():
 				passages.append(current)
 	
 	#first we'll place exits in some of the end spaces. Then place some treasure.
-	print("end caps:" + str(ends))
 	predictable_shuffle(ends)
-	print("shuffled end caps:" + str(ends))
-	print("passages" + str(passages))
 	predictable_shuffle(passages)
-	print("shuffled passages" + str(passages))
 	
 	setEntrancePosition(ends)
 	setExitPositions(ends)
@@ -184,7 +180,6 @@ func placeFloorTile(cell):
 func erase_walls():
 	var calculatedPercent = percent_walls_to_remove / 100.0
 	var wallsToRemove = int(width * height * calculatedPercent)
-	print("Remove "+str(wallsToRemove)+" walls.")
 	var cellsWithWallsRemoved = []
 	for i in range(wallsToRemove):
 		var xOptions = rng.randi_range(1,width-1)
@@ -212,7 +207,6 @@ func erase_walls():
 				else:
 					cell_properties[connection] = 10
 				placeFloorTile(wallToErase + (offset*space))
-	print("Walls to erase:" + str(cellsWithWallsRemoved))
 func place_wall_tiles():
 	#this goes through 2 phases, in phase 1 we loop through every tile on the map
 	#and place basic top, left, right and bottom walls

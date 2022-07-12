@@ -78,7 +78,7 @@ func getValidArrayIndexes(var level: int, var levelList):
 	var validIndex = []
 	for n in range(0, levelList.size()):
 		var itemLvl = levelList[n]
-		print(str(itemLvl) +" <= "+str(level) +" = "+str(itemLvl <= level))
+		#print(str(itemLvl) +" <= "+str(level) +" = "+str(itemLvl <= level))
 		if (itemLvl <= level):
 			validIndex.push_back(n)	
 	return validIndex
