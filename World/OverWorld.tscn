@@ -18,7 +18,7 @@
 [ext_resource path="res://Enemies/DarkWizard/DarkWizard.tscn" type="PackedScene" id=16]
 [ext_resource path="res://Enemies/TinyDemon/TinyDemon.tscn" type="PackedScene" id=17]
 [ext_resource path="res://World/Dungeon/DungeonTileSet32x32.tres" type="TileSet" id=18]
-[ext_resource path="res://Items/RustySword.tscn" type="PackedScene" id=19]
+[ext_resource path="res://Items/RustySwordPickup.tscn" type="PackedScene" id=19]
 [ext_resource path="res://World/OverWorld.gd" type="Script" id=20]
 [ext_resource path="res://Items/SteelMace.tscn" type="PackedScene" id=21]
 [ext_resource path="res://Items/GoldenSword.tscn" type="PackedScene" id=22]
@@ -709,6 +709,7 @@ position = Vector2( 304, 104 )
 
 [node name="OverworldDungeonEntrance" parent="." instance=ExtResource( 13 )]
 position = Vector2( 48.2451, 304 )
+dungeonLevel = 10
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -719,9 +720,6 @@ position = Vector2( 48.2451, 304 )
 [node name="SlimeMonster" parent="." instance=ExtResource( 15 )]
 material = SubResource( 55 )
 position = Vector2( 136.694, 88 )
-
-[node name="RustySwordPickup" parent="." instance=ExtResource( 19 )]
-position = Vector2( 120.613, 232 )
 
 [node name="RustyMacePickup" parent="." instance=ExtResource( 21 )]
 position = Vector2( 152.776, 232 )
@@ -737,6 +735,9 @@ position = Vector2( 176.899, 232 )
 
 [node name="SteelAxePickup" parent="." instance=ExtResource( 25 )]
 position = Vector2( 168.858, 264 )
+
+[node name="RustySwordPickup" parent="." instance=ExtResource( 19 )]
+position = Vector2( 120.613, 232 )
 
 [connection signal="body_entered" from="OverworldDungeonEntrance" to="." method="_on_OverworldDungeonEntrance_body_entered"]
 

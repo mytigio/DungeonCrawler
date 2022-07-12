@@ -1,15 +1,13 @@
-[gd_scene load_steps=62 format=2]
+[gd_scene load_steps=60 format=2]
 
 [ext_resource path="res://Player/Player.png" type="Texture" id=1]
 [ext_resource path="res://Player/Player.gd" type="Script" id=2]
 [ext_resource path="res://HitBoxes_HurtBoxes/Hitbox.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Player/SwordHitbox.gd" type="Script" id=4]
 [ext_resource path="res://HitBoxes_HurtBoxes/HurtBox.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Shadows/MediumShadow.png" type="Texture" id=6]
 [ext_resource path="res://Music and Sounds/Swipe.wav" type="AudioStream" id=7]
 [ext_resource path="res://Music and Sounds/Evade.wav" type="AudioStream" id=8]
 [ext_resource path="res://WhiteColor.gdshader" type="Shader" id=9]
-[ext_resource path="res://Items/IronMace.png" type="Texture" id=10]
 [ext_resource path="res://Items/SwingingWeapon.tscn" type="PackedScene" id=11]
 
 [sub_resource type="ShaderMaterial" id=2]
@@ -916,12 +914,9 @@ texture = ExtResource( 6 )
 visible = false
 position = Vector2( -19, -8 )
 rotation = -1.5708
-texture = ExtResource( 10 )
 
 [node name="Hitbox" parent="SwingingWeapon" index="0"]
 collision_mask = 8
-script = ExtResource( 4 )
-damage = 2
 
 [node name="Sprite" type="Sprite" parent="."]
 material = SubResource( 2 )

@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://World/Dungeon/Dungeon.gd" type="Script" id=1]
 [ext_resource path="res://World/Dungeon/DungeonTileSet32x32.tres" type="TileSet" id=2]
@@ -19,6 +19,9 @@
 [ext_resource path="res://Music and Sounds/Fantasy Choir 1.wav" type="AudioStream" id=17]
 [ext_resource path="res://Effects/Light.png" type="Texture" id=18]
 [ext_resource path="res://World/Dungeon/ConfirmDungeonExit.gd" type="Script" id=19]
+[ext_resource path="res://Items/GoldenSword.tscn" type="PackedScene" id=20]
+[ext_resource path="res://Items/IronSword.tscn" type="PackedScene" id=21]
+[ext_resource path="res://Items/SteelClaymore.tscn" type="PackedScene" id=22]
 
 [sub_resource type="Gradient" id=1]
 offsets = PoolRealArray(  )
@@ -62,6 +65,7 @@ position = Vector2( 8, 8 )
 position = Vector2( 0, -11 )
 scale = Vector2( 1.01769, 1.14977 )
 texture = ExtResource( 18 )
+texture_scale = 1.25
 color = Color( 0.733333, 0.65098, 0.458824, 1 )
 shadow_enabled = true
 shadow_color = Color( 0, 0, 0, 1 )
@@ -80,8 +84,8 @@ minTreasure = 3
 minEnemies = 3
 entranceScene = ExtResource( 3 )
 exitScene = ExtResource( 11 )
-treasureSpawnLevels = [ 1, 5 ]
-treasureOptions = [ ExtResource( 9 ), ExtResource( 5 ) ]
+treasureSpawnLevels = [ 1, 5, 5, 10, 20 ]
+treasureOptions = [ ExtResource( 9 ), ExtResource( 5 ), ExtResource( 21 ), ExtResource( 20 ), ExtResource( 22 ) ]
 enemySpawnLevels = [ 1, 2, 2, 5, 10 ]
 enemyOptions = [ ExtResource( 4 ), ExtResource( 13 ), ExtResource( 15 ), ExtResource( 14 ), ExtResource( 16 ) ]
 

@@ -11,8 +11,8 @@ var stamina = max_stamina setget set_stamina
 export(Texture) var weapon_texture: Texture = null
 export(int) var weapon_stamina_cost = 0
 export(int) var weapon_damage = 1
-
 export(int) var point_value = 5
+export(Shape2D) var weapon_collision
 
 signal no_health
 signal health_changed(new_value, old_value)
