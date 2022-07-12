@@ -3,6 +3,7 @@ extends Node
 export(int) var initial_seed = 0
 var level = 0 setget set_level
 var levelSeed = 0
+var overworld_entrance_position
 var points = 0 setget set_points
 
 signal level_changed(level)

@@ -914,7 +914,7 @@ texture = ExtResource( 6 )
 
 [node name="SwingingWeapon" parent="." instance=ExtResource( 11 )]
 visible = false
-position = Vector2( -17, -4 )
+position = Vector2( -19, -8 )
 rotation = -1.5708
 texture = ExtResource( 10 )
 
@@ -928,7 +928,7 @@ material = SubResource( 2 )
 position = Vector2( 0, -9 )
 texture = ExtResource( 1 )
 hframes = 60
-frame = 39
+frame = 28
 
 [node name="PlayerShape" type="CollisionShape2D" parent="."]
 visible = false

@@ -1,5 +1,7 @@
 extends Node2D
 
+const DungeonExit = preload("DungeonExit.gd")
+
 onready var mapMaker = $YSort/ProceduralMazeLevel
 onready var camera = $PlayerCamera
 onready var background = $Background
@@ -33,19 +35,26 @@ func _ready():
 	#can determine the sprites for these things.
 
 func _on_ProceduralMazeLevel_addEntrance(position: Vector2):
-	var entrance = mapMaker.entranceScene.instance()
+	var entrance = mapMaker.entranceScene.instance() as DungeonExit
 	entrance.position = position
+	var connectionResults = entrance.connect("exit_dungeon", self, "_on_exit_dungeon")
+	
 	entranceContainer.add_child(entrance)
+	
+func _on_exit_dungeon(body):
+	print("popup exit confirmation")
+	confirm_exit();
 
 func confirm_exit():
 	print("show exit dungeon confirmation")
-	$CanvasLayer/ConfirmExit.show_modal()
+	$CanvasLayer/ConfirmExit.popup_centered()
 
 func _on_ProceduralMazeLevel_addExits(positions):
 	for position in positions:
 		var exit = mapMaker.exitScene.instance()
 		exit.position = position
 		exitsContainer.add_child(exit)
+		
 
 func _on_ProceduralMazeLevel_addTreasure(positions):
 	if (mapMaker.treasureOptions.size() > 0):
@@ -77,6 +86,9 @@ func getValidArrayIndexes(var level: int, var levelList):
 
 
 func _on_ConfirmExit_confirmed():
+	get_tree().change_scene("res://World/OverWorld.tscn")
+	var player = $SpriteLayer/Player
+	GameManager.level = 0
 	pass # Replace with function body.
 
 
