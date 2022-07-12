@@ -180,14 +180,12 @@ func placeFloorTile(cell):
 func erase_walls():
 	var calculatedPercent = percent_walls_to_remove / 100.0
 	var wallsToRemove = int(width * height * calculatedPercent)
-	var cellsWithWallsRemoved = []
 	for i in range(wallsToRemove):
 		var xOptions = rng.randi_range(1,width-1)
 		var x = xOptions*spacing
 		var yOptions = rng.randi_range(1,height-1)
 		var y = yOptions*spacing
 		var wallToErase = Vector2(x, y)
-		cellsWithWallsRemoved.append(wallToErase)
 		var erasedCellWalls = cell_properties[wallToErase]
 		#pick a neighbor
 		var neighbor = cell_walls.keys()[rng.randi() % cell_walls.size()]
