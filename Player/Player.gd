@@ -22,7 +22,7 @@ var rolling = false
 onready var animationPlayer = $AnimationPlayer
 onready var animationTree = $AnimationTree
 onready var animationState = animationTree.get("parameters/playback")
-onready var sword = $SwingingWeapon as Sprite
+onready var sword = $SwingingWeapon
 onready var swordHitbox = $SwingingWeapon/Hitbox
 onready var hurtBox = $HurtBox
 onready var blinkPlayer = $FlashAnimationPlayer
@@ -32,7 +32,6 @@ func _ready():
 	set_weapon_info()
 	animationTree.active = true
 	swordHitbox.knockback_vector = roll_vector
-	
 
 # Called when the node enters the scene tree for the first time.
 func _physics_process(delta):
@@ -75,6 +74,8 @@ func set_weapon_info():
 	swordHitbox.stamina_cost = stats.weapon_stamina_cost
 	swordHitbox.damage = stats.weapon_damage
 	swordHitbox.current_damage = stats.weapon_damage
+	var swordCollision = $SwingingWeapon/Hitbox/CollisionShape2D
+	swordCollision.shape = stats.weapon_collision
 
 func can_roll():
 	return (state != ROLL and stats.stamina >= ROLL_STAMINA_COST)
