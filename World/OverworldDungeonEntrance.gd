@@ -12,7 +12,6 @@ func _on_ConfirmationDialog_confirmed():
 	print("start dungeon")
 	GameManager.level = dungeonLevel
 	var position_to_use = position
-	print(position_to_use)
 	GameManager.overworld_entrance_position = position_to_use
 	GameManager.levelSeed = (str(GameManager.initial_seed)+"_"+str(position_to_use)+"_"+str(dungeonLevel)).hash()
 	print("Seed for entrance at " + str(position_to_use) + ", level "+ str(dungeonLevel)+": "+str(GameManager.levelSeed))
