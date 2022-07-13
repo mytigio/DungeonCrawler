@@ -73,8 +73,9 @@ remote func pre_configure_game():
 	rpc_id(1, "done_preconfiguring")
 
 func startGame():
-	get_tree().network_peer = null
+	# this shoudl fire off the pre_config
 	get_tree().change_scene(GameManager.OVERWORLD_SCENE)
+	
 	
 func joinGame(ip, port):
 	var peer = NetworkedMultiplayerENet.new()

@@ -15,7 +15,7 @@ func _button_pressed():
 	peer.create_server(GameManager.SERVER_PORT, GameManager.MAX_PLAYERS)
 	get_tree().network_peer = peer
 	print("server lisenting on: ", GameManager.SERVER_PORT)
-	get_tree().change_scene("res://UI/screens/Lobby/LobbyMenu.tscn")
+	get_tree().change_scene(GameManager.LOBBY_SCENE)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
