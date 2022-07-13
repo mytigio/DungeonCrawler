@@ -3,6 +3,7 @@
 extends Node
 
 # Connect all functions
+signal game_ended()
 
 func _ready():
 	print("lobby manager ready ")
@@ -46,8 +47,7 @@ remote func register_player(info):
 	# Store the info
 	player_info[id] = info
 	
-	
-	
+
 remote func pre_configure_game():
 	var selfPeerID = get_tree().get_network_unique_id()
 
@@ -79,4 +79,12 @@ func startGame():
 func joinGame(ip, port):
 	var peer = NetworkedMultiplayerENet.new()
 	get_tree().network_peer = peer
-
+	
+func quitGame():
+	get_tree().network_peer = null
+	GameManager.reset()
+	if has_node("/root/OverWorld"): # Game is in progress.
+		# End it
+		get_node("/root/OverWorld").queue_free()
+	
+	get_tree().change_scene(GameManager.MULTIPLAYER_MENU)

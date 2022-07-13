@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://World/Dungeon/Dungeon.gd" type="Script" id=1]
 [ext_resource path="res://World/Dungeon/DungeonTileSet32x32.tres" type="TileSet" id=2]
@@ -7,7 +7,6 @@
 [ext_resource path="res://Items/LargeEnergyPotion.tscn" type="PackedScene" id=5]
 [ext_resource path="res://World/ProceduralMazeLevel.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=7]
-[ext_resource path="res://UI/HealthUI.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Items/SmallEnergyPotion.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Player/PlayerCamera.tscn" type="PackedScene" id=10]
 [ext_resource path="res://World/Dungeon/DungeonEntrance.tscn" type="PackedScene" id=11]
@@ -115,8 +114,6 @@ color = Color( 0, 0, 0, 1 )
 [node name="Enemies" type="YSort" parent="YSort"]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
-
-[node name="StatsUI" parent="CanvasLayer" instance=ExtResource( 8 )]
 
 [node name="ConfirmExit" type="ConfirmationDialog" parent="CanvasLayer"]
 margin_left = 88.0

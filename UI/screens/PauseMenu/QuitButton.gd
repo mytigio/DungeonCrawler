@@ -11,7 +11,7 @@ func _ready():
 	self.connect("pressed", self, "_button_pressed")
 
 func _button_pressed():
-	get_tree().change_scene(GameManager.MULTIPLAYER_MENU)
+	LobbyManager.quitGame()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
