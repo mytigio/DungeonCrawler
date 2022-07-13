@@ -1,8 +1,9 @@
-[gd_scene load_steps=60 format=2]
+[gd_scene load_steps=61 format=2]
 
 [ext_resource path="res://Player/Player.png" type="Texture" id=1]
 [ext_resource path="res://Player/Player.gd" type="Script" id=2]
 [ext_resource path="res://HitBoxes_HurtBoxes/Hitbox.tscn" type="PackedScene" id=3]
+[ext_resource path="res://UI/CanvasLayer.tscn" type="PackedScene" id=4]
 [ext_resource path="res://HitBoxes_HurtBoxes/HurtBox.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Shadows/MediumShadow.png" type="Texture" id=6]
 [ext_resource path="res://Music and Sounds/Swipe.wav" type="AudioStream" id=7]
@@ -905,6 +906,8 @@ collision_layer = 2
 script = ExtResource( 2 )
 MAX_SPEED = 100
 INVINCIBILITY_AFTER_HIT = 0.75
+
+[node name="CanvasLayer" parent="." instance=ExtResource( 4 )]
 
 [node name="ShadowSprite" type="Sprite" parent="."]
 position = Vector2( 0, 3 )

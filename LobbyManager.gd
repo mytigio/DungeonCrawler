@@ -45,5 +45,38 @@ remote func register_player(info):
 	var id = get_tree().get_rpc_sender_id()
 	# Store the info
 	player_info[id] = info
+	
+	
+	
+remote func pre_configure_game():
+	var selfPeerID = get_tree().get_network_unique_id()
 
-	# Call function to update lobby UI here
+	# Load world
+	var world = load("res://Wolrd/OverWorld").instance()
+	get_node("/root").add_child(world)
+
+	# Load my player
+	var my_player = preload("res://Player/Player.tscn").instance()
+	my_player.set_name(str(selfPeerID))
+	my_player.set_network_master(selfPeerID) # Will be explained later
+	get_node("/root/world/players").add_child(my_player)
+
+	# Load other players
+	for p in player_info:
+		var player = preload("res://Player/Player.tscn").instance()
+		player.set_name(str(p))
+		player.set_network_master(p) # Will be explained later
+		get_node("/root/world/players").add_child(player)
+
+	# Tell server (remember, server is always ID=1) that this peer is done pre-configuring.
+	# The server can call get_tree().get_rpc_sender_id() to find out who said they were done.
+	rpc_id(1, "done_preconfiguring")
+
+func startGame():
+	get_tree().network_peer = null
+	get_tree().change_scene(GameManager.OVERWORLD_SCENE)
+	
+func joinGame(ip, port):
+	var peer = NetworkedMultiplayerENet.new()
+	get_tree().network_peer = peer
+
