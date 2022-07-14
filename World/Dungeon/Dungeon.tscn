@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://World/Dungeon/Dungeon.gd" type="Script" id=1]
 [ext_resource path="res://World/Dungeon/DungeonTileSet32x32.tres" type="TileSet" id=2]
@@ -7,7 +7,6 @@
 [ext_resource path="res://Items/LargeEnergyPotion.tscn" type="PackedScene" id=5]
 [ext_resource path="res://World/ProceduralMazeLevel.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Items/SmallEnergyPotion.tscn" type="PackedScene" id=9]
-[ext_resource path="res://Player/PlayerCamera.tscn" type="PackedScene" id=10]
 [ext_resource path="res://World/Dungeon/DungeonEntrance.tscn" type="PackedScene" id=11]
 [ext_resource path="res://World/Hazards/Lava.tres" type="Texture" id=12]
 [ext_resource path="res://Enemies/SlimeMonster/SlimeMonster.tscn" type="PackedScene" id=13]
@@ -42,15 +41,6 @@ texture = ExtResource( 12 )
 centered = false
 region_enabled = true
 region_rect = Rect2( -64, -64, 564, 564 )
-
-[node name="PlayerCamera" parent="." instance=ExtResource( 10 )]
-position = Vector2( 8, 8 )
-
-[node name="BottomRight" parent="PlayerCamera/Limits" index="0"]
-position = Vector2( 1704, 1384 )
-
-[node name="TopLeft" parent="PlayerCamera/Limits" index="1"]
-position = Vector2( -1648, -1104 )
 
 [node name="YSort" type="YSort" parent="."]
 
@@ -106,5 +96,4 @@ autoplay = true
 [connection signal="addTreasure" from="YSort/ProceduralMazeLevel" to="." method="_on_ProceduralMazeLevel_addTreasure"]
 [connection signal="finished" from="AudioStreamPlayer" to="." method="_on_AudioStreamPlayer_finished"]
 
-[editable path="PlayerCamera"]
 [editable path="YSort/ProceduralMazeLevel"]

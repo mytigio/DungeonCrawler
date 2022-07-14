@@ -58,7 +58,6 @@ remote func pre_configure_game():
 	players_node.name = "players"
 	get_node("/root").add_child(players_node)
 	
-
 	# Load my player
 	var my_player = preload("res://Player/Player.tscn").instance()
 	my_player.set_name(str(selfPeerID))

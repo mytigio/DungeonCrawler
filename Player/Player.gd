@@ -80,6 +80,9 @@ func move_state(delta):
 	if (Input.is_action_just_pressed("attack")):
 		state = ATTACK
 	
+	if (Input.is_action_just_pressed("light")):
+		$Light.enabled = !$Light.enabled
+	
 	if (Input.is_action_just_pressed("escape_menu")):
 		var escapeOverlay = $CanvasLayer/PauseMenu/Popup
 		print("escape menu triggered")
