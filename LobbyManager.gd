@@ -73,7 +73,11 @@ remote func pre_configure_game():
 	rpc_id(1, "done_preconfiguring")
 
 func startGame():
-	# this shoudl fire off the pre_config
+	# remove the player from the overworld scene
+	# refactor overworld for players node
+	# Fire off the pre_config_here
+	# remove player node from overworld and programtically add all
+	# ensure pre_config fires on all clients and game starts
 	get_tree().change_scene(GameManager.OVERWORLD_SCENE)
 	
 	
