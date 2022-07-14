@@ -52,33 +52,50 @@ remote func pre_configure_game():
 	var selfPeerID = get_tree().get_network_unique_id()
 
 	# Load world
-	var world = load("res://Wolrd/OverWorld").instance()
+	var world = load("res://World/OverWorld.tscn").instance()
 	get_node("/root").add_child(world)
+	var players_node = Node.new()
+	players_node.name = "players"
+	get_node("/root").add_child(players_node)
+	
 
 	# Load my player
 	var my_player = preload("res://Player/Player.tscn").instance()
 	my_player.set_name(str(selfPeerID))
 	my_player.set_network_master(selfPeerID) # Will be explained later
-	get_node("/root/world/players").add_child(my_player)
+	get_node("/root/players").add_child(my_player)
 
 	# Load other players
 	for p in player_info:
 		var player = preload("res://Player/Player.tscn").instance()
 		player.set_name(str(p))
 		player.set_network_master(p) # Will be explained later
-		get_node("/root/world/players").add_child(player)
+		get_node("/root/players").add_child(player)
 
 	# Tell server (remember, server is always ID=1) that this peer is done pre-configuring.
 	# The server can call get_tree().get_rpc_sender_id() to find out who said they were done.
+	get_node("/root/LobbyMenu").queue_free()
 	rpc_id(1, "done_preconfiguring")
+	
+remote func post_configure_game():
+	# Only the server is allowed to tell a client to unpause
+	if 1 == get_tree().get_rpc_sender_id():
+		get_tree().set_pause(false)
+		# Game starts now!
 
 func startGame():
-	# remove the player from the overworld scene
-	# refactor overworld for players node
+	
+	for player in LobbyManager.player_info:
+		rpc(player["id"], "pre_configure_game")
+	pre_configure_game()
+	
+	
+	# remove the player from the overworld scene - check
+	# refactor overworld for players node - check...
 	# Fire off the pre_config_here
 	# remove player node from overworld and programtically add all
 	# ensure pre_config fires on all clients and game starts
-	get_tree().change_scene(GameManager.OVERWORLD_SCENE)
+	#get_tree().change_scene(GameManager.OVERWORLD_SCENE)
 	
 	
 func joinGame(ip, port):
@@ -91,5 +108,6 @@ func quitGame():
 	if has_node("/root/OverWorld"): # Game is in progress.
 		# End it
 		get_node("/root/OverWorld").queue_free()
+	get_node("/root/players").queue_free()
 	
 	get_tree().change_scene(GameManager.MULTIPLAYER_MENU)

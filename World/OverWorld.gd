@@ -1,17 +1,16 @@
 extends Node2D
 
 const OverworldDungeonEntrance = preload("OverworldDungeonEntrance.tscn")
-const Player = preload("../Player/Player.gd")
 
-onready var player = $SpriteLayer/Player as Player
 onready var entrance = $OverworldDungeonEntrance
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	if GameManager.overworld_entrance_position != null:
-		print("We have a player position already: " + str( GameManager.overworld_entrance_position))
-		player.position = GameManager.overworld_entrance_position
+		for player in LobbyManager.player_info:
+			print("We have a player position already: " + str( GameManager.overworld_entrance_position))
+			player.position = GameManager.overworld_entrance_position
 	readyDungeonEntrances()
 
 func readyDungeonEntrances():
