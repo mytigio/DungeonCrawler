@@ -7,6 +7,9 @@ onready var ROLL_SPEED = MAX_SPEED * 2
 
 var block_stamina_drain = false
 
+puppet var puppet_pos = Vector2()
+puppet var puppet_motion = Vector2()
+
 enum {
 	MOVE,
 	ROLL,
@@ -35,13 +38,21 @@ func _ready():
 
 # Called when the node enters the scene tree for the first time.
 func _physics_process(delta):
-	match state:
-		MOVE:
-			move_state(delta)
-		ROLL:
-			role_state(delta)
-		ATTACK:
-			attack_state(delta)
+	if is_network_master():
+		match state:
+			MOVE:
+				move_state(delta)
+			ROLL:
+				role_state(delta)
+			ATTACK:
+				attack_state(delta)
+		
+		# set other players
+		rset("puppet_motion", velocity)
+		rset("puppet_pos", position)
+	else:
+		position = puppet_pos
+		velocity = puppet_motion
 
 func move_state(delta):
 	var input_vector = Vector2.ZERO
@@ -69,8 +80,11 @@ func move_state(delta):
 	if (Input.is_action_just_pressed("attack")):
 		state = ATTACK
 	
+	if (Input.is_action_just_pressed("light")):
+		$Light.enabled = !$Light.enabled
+	
 	if (Input.is_action_just_pressed("escape_menu")):
-		var escapeOverlay = get_node("/root/OverWorld/CanvasLayer/PauseMenu/Popup")
+		var escapeOverlay = $CanvasLayer/PauseMenu/Popup
 		print("escape menu triggered")
 		if (!escapeOverlay.visible):
 			escapeOverlay.show()

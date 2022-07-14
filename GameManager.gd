@@ -37,3 +37,8 @@ func _ready():
 		initial_seed = randi()
 	print("Initial Game Seed:"+str(initial_seed))
 	seed(initial_seed)
+
+func reset():
+	overworld_entrance_position = null
+	level = 0
+	points = 0
