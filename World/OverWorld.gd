@@ -25,4 +25,5 @@ func readyDungeonEntrances():
 
 func _on_OverworldDungeonEntrance_body_entered(body):
 	print("show entrance dialog")
-	entrance.show_dialog()
+	entrance.show_dialog(body)
+

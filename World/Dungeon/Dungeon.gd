@@ -39,7 +39,6 @@ func _on_ProceduralMazeLevel_addEntrance(position: Vector2):
 	var entrance = mapMaker.entranceScene.instance() as DungeonExit
 	entrance.position = position
 	var connectionResults = entrance.connect("exit_dungeon", self, "_on_exit_dungeon")
-	
 	entranceContainer.add_child(entrance)
 	
 func _on_exit_dungeon(body):
@@ -48,7 +47,7 @@ func _on_exit_dungeon(body):
 
 func confirm_exit():
 	print("show exit dungeon confirmation")
-	$CanvasLayer/ConfirmExit.popup_centered()
+	$CanvasLayer/ConfirmExit.popup_centered()  # FIXME doesn't pop up 
 
 func _on_ProceduralMazeLevel_addExits(positions):
 	for position in positions:
