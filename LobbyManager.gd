@@ -105,14 +105,7 @@ func startGame():
 	for player in LobbyManager.player_info:
 		rpc_id(player, "pre_configure_game")
 	pre_configure_game()
-	
-	
-	# remove the player from the overworld scene - check
-	# refactor overworld for players node - check...
-	# Fire off the pre_config_here
-	# remove player node from overworld and programtically add all
-	# ensure pre_config fires on all clients and game starts
-	#get_tree().change_scene(GameManager.OVERWORLD_SCENE)
+
 	
 func joinGame(ip, port):
 	var peer = NetworkedMultiplayerENet.new()
