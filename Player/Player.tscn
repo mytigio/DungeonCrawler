@@ -1004,6 +1004,7 @@ shadow_filter_smooth = 0.3
 
 [node name="PlayerCamera" parent="." instance=ExtResource( 12 )]
 position = Vector2( 8, 8 )
+current = false
 
 [node name="BottomRight" parent="PlayerCamera/Limits" index="0"]
 position = Vector2( 1704, 1384 )

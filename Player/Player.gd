@@ -7,8 +7,8 @@ onready var ROLL_SPEED = MAX_SPEED * 2
 
 var block_stamina_drain = false
 
-puppet var puppet_pos = Vector2()
-puppet var puppet_motion = Vector2()
+puppet var puppet_input = Vector2()
+puppet var puppet_state = "IDLE"
 
 enum {
 	MOVE,
@@ -35,29 +35,32 @@ func _ready():
 	set_weapon_info()
 	animationTree.active = true
 	swordHitbox.knockback_vector = roll_vector
+	if is_network_master():
+		$PlayerCamera.make_current()
 
 # Called when the node enters the scene tree for the first time.
 func _physics_process(delta):
-	if is_network_master():
-		match state:
-			MOVE:
-				move_state(delta)
-			ROLL:
-				role_state(delta)
-			ATTACK:
-				attack_state(delta)
-		
-		# set other players
-		rset("puppet_motion", velocity)
-		rset("puppet_pos", position)
-	else:
-		position = puppet_pos
-		velocity = puppet_motion
-
-func move_state(delta):
+	#input vector:
 	var input_vector = Vector2.ZERO
-	input_vector.x = (Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left"))
-	input_vector.y = (Input.get_action_strength("ui_down") - Input.get_action_strength("ui_up"))
+	if is_network_master():
+		input_vector.x = (Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left"))
+		input_vector.y = (Input.get_action_strength("ui_down") - Input.get_action_strength("ui_up"))
+		# set other players
+		rset("puppet_input", input_vector)
+		rset("puppet_state", state)
+	else:
+		input_vector = puppet_input
+		state = puppet_state
+	
+	match state:
+		MOVE:
+			move_state(delta, input_vector)
+		ROLL:
+			role_state(delta)
+		ATTACK:
+			attack_state(delta)
+
+func move_state(delta, input_vector: Vector2):
 	animationState.travel("Run")
 	input_vector = input_vector.normalized()
 	if (input_vector != Vector2.ZERO):
