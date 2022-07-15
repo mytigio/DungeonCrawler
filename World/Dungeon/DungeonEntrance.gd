@@ -9,7 +9,9 @@ func _on_DungeonEntrance_body_entered(body):
 		GameManager.levelSeed = (str(GameManager.initial_seed)+"_"+str(global_position)+"_"+str(dungeonLevel)).hash()
 
 		# remove old level
-		get_node("/root/Dungeon").queue_free()
+		var oldDungeon = get_node("/root/Dungeon")
+		oldDungeon.name = "oldDungeon"
+		oldDungeon.queue_free()
 		
 		# load the new level
 		var dungeon = load("res://World/Dungeon/Dungeon.tscn").instance()
@@ -23,6 +25,7 @@ func _on_DungeonEntrance_body_entered(body):
 		var exit = get_node("/root/Dungeon/YSort/Entrances/DungeonExit")
 		var position = Vector2(exit.position.x + 10, exit.position.y + 10)
 		body.position = position
+		body.get_node("Light").enabled = true
 
 
 func _on_DungeonEntrance_body_exited(body):
