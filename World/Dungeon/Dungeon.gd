@@ -3,7 +3,7 @@ extends Node2D
 const DungeonExit = preload("DungeonExit.gd")
 
 onready var mapMaker = $YSort/ProceduralMazeLevel
-onready var camera = $PlayerCamera
+#onready var camera = $PlayerCamera
 onready var background = $Background
 onready var generator = $YSort/ProceduralMazeLevel
 onready var entranceContainer = $YSort/Entrances
@@ -48,7 +48,7 @@ func _on_exit_dungeon(body):
 
 func confirm_exit():
 	print("show exit dungeon confirmation")
-	$CanvasLayer/ConfirmExit.popup_centered()
+ 	$CanvasLayer/ConfirmExit.popup_centered()
 
 func _on_ProceduralMazeLevel_addExits(positions):
 	for position in positions:

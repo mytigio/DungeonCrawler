@@ -13,8 +13,10 @@ func _on_ConfirmationDialog_confirmed():
 	GameManager.level = dungeonLevel
 	GameManager.overworld_entrance_position = global_position
 	GameManager.levelSeed = (str(GameManager.initial_seed)+"_"+str(global_position)+"_"+str(dungeonLevel)).hash()
+	
 	var dungeon = load("res://World/Dungeon/Dungeon.tscn").instance()
 	var root = get_node("/root")
+	get_node("/root/OverWorld").queue_free()
 	root.add_child(dungeon)
 	root.move_child(get_node("/root/players"), root.get_child_count() -1)
 

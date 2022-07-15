@@ -115,8 +115,9 @@ func quitGame():
 	get_tree().network_peer = null
 	GameManager.reset()
 	if has_node("/root/OverWorld"): # Game is in progress.
-		# End it
 		get_node("/root/OverWorld").queue_free()
+	if has_node("/root/Dungeon"): # Game is in progress.
+		get_node("/root/Dungeon").queue_free()
 	get_node("/root/players").queue_free()
 	player_info = {}
 	get_tree().change_scene(GameManager.MULTIPLAYER_MENU)
