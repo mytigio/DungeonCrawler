@@ -32,13 +32,16 @@ func add_points(value):
 	
 func _ready():
 	print("game manage ready")
-	if (initial_seed == 0):
-		randomize()
-		initial_seed = randi()
-	print("Initial Game Seed:"+str(initial_seed))
-	seed(initial_seed)
+
 
 func reset():
 	overworld_entrance_position = null
 	level = 0
 	points = 0
+	
+func createSeed():
+	if (initial_seed == 0):
+		randomize()
+		initial_seed = randi()
+	print("Initial Game Seed:"+str(initial_seed))
+	seed(initial_seed)

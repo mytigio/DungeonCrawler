@@ -49,6 +49,8 @@ remote func register_player(info):
 	
 
 remote func pre_configure_game():
+	if is_network_master():
+		GameManager.createSeed()
 	var selfPeerID = get_tree().get_network_unique_id()
 
 	# Load world
@@ -73,6 +75,7 @@ remote func pre_configure_game():
 
 	# Tell server (remember, server is always ID=1) that this peer is done pre-configuring.
 	# The server can call get_tree().get_rpc_sender_id() to find out who said they were done.
+	get_node("/root/LobbyMenu").queue_free()
 	if not get_tree().is_network_server():
 		# Tell server we are ready to start.
 		rpc_id(1, "post_configure_game", get_tree().get_network_unique_id())
@@ -83,7 +86,7 @@ remote func pre_configure_game():
 	
 remote func post_configure_game():
 	# Only the server is allowed to tell a client to unpause
-	get_node("/root/LobbyMenu").queue_free()
+
 	if 1 == get_tree().get_rpc_sender_id():
 		get_tree().set_pause(false)
 		# Game starts now!
@@ -107,8 +110,6 @@ func joinGame(ip, port):
 	peer.create_client(ip, port)
 	get_tree().network_peer = peer
 
-
-
 	
 func quitGame():
 	get_tree().network_peer = null
@@ -117,5 +118,5 @@ func quitGame():
 		# End it
 		get_node("/root/OverWorld").queue_free()
 	get_node("/root/players").queue_free()
-	
+	player_info = {}
 	get_tree().change_scene(GameManager.MULTIPLAYER_MENU)
