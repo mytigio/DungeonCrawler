@@ -48,7 +48,7 @@ func _on_exit_dungeon(body):
 
 func confirm_exit():
 	print("show exit dungeon confirmation")
- 	$CanvasLayer/ConfirmExit.popup_centered()
+	$CanvasLayer/ConfirmExit.popup_centered()
 
 func _on_ProceduralMazeLevel_addExits(positions):
 	for position in positions:
