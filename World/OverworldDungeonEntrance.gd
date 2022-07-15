@@ -17,16 +17,10 @@ func _on_ConfirmationDialog_confirmed():
 	GameManager.levelSeed = (str(GameManager.initial_seed)+"_"+str(global_position)+"_"+str(dungeonLevel)).hash()
 	
 	# load the new level
-	var dungeon = load("res://World/Dungeon/Dungeon.tscn").instance()
-	var root = get_node("/root")
-	# remove old level
-	get_node("/root/OverWorld").queue_free()
-	root.add_child(dungeon)
-	# fix players index
-	root.move_child(get_node("/root/players"), root.get_child_count() -1)
+	GameManager.change_scene("res://World/Dungeon/Dungeon.tscn")
 	
 	# set player position only the one that entered 
-	var exit = get_node("/root/Dungeon/YSort/Entrances/DungeonExit")
+	var exit = get_node("/root/world/YSort/Entrances/DungeonExit")
 	var position = Vector2(exit.position.x + 10, exit.position.y + 10)
 	body.position = position
 

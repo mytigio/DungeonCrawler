@@ -49,13 +49,22 @@ remote func register_player(info):
 	
 
 remote func pre_configure_game():
-	if is_network_master():
-		GameManager.createSeed()
-	var selfPeerID = get_tree().get_network_unique_id()
 
+	var selfPeerID = get_tree().get_network_unique_id()
+	if is_network_master():
+		GameManager.create_seed()
+		
+	#need to do the emit/signal stuff here, 1 will be the server so it should gen then others should 
+	# consume the signal and get the new seed
+	#if 1 == selfPeerID:
+	#	GameManager.create_seed()
+	#else: 
+	#	GameManager.seed = rpc_id(selfPeerID, "get_initial_seed")
+		
 	# Load world
-	var world = load("res://World/OverWorld.tscn").instance()
-	get_node("/root").add_child(world)
+
+	GameManager.change_scene("res://World/OverWorld.tscn")
+	
 	var players_node = Node.new()
 	players_node.name = "players"
 	get_node("/root").add_child(players_node)
@@ -114,10 +123,5 @@ func joinGame(ip, port):
 func quitGame():
 	get_tree().network_peer = null
 	GameManager.reset()
-	if has_node("/root/OverWorld"): # Game is in progress.
-		get_node("/root/OverWorld").queue_free()
-	if has_node("/root/Dungeon"): # Game is in progress.
-		get_node("/root/Dungeon").queue_free()
-	get_node("/root/players").queue_free()
 	player_info = {}
 	get_tree().change_scene(GameManager.MULTIPLAYER_MENU)

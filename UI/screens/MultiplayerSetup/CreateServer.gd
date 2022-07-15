@@ -14,6 +14,7 @@ func _button_pressed():
 	var peer = NetworkedMultiplayerENet.new()
 	peer.create_server(GameManager.SERVER_PORT, GameManager.MAX_PLAYERS)
 	get_tree().network_peer = peer
+	
 	print("server lisenting on: ", GameManager.SERVER_PORT)
 	get_tree().change_scene(GameManager.LOBBY_SCENE)
 
