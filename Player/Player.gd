@@ -152,6 +152,7 @@ func _on_HurtBox_invincibility_ended():
 func _on_no_health():
 	print("player died!")
 	self.queue_free()
-	GameManager.change_scene(GameManager.GAME_OVER)
+	GameManager.reset()
+	get_tree().change_scene(GameManager.GAME_OVER_SCENE)
 
 	

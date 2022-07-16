@@ -14,7 +14,7 @@ var LOBBY_SCENE = "res://UI/screens/Lobby/lobbyMenu.tscn"
 var JOIN_SERVER_SCENE = "res://UI/screens/MultiplayerSetup/JoinServerMenu/JoinServerMenu.tscn"
 var OVERWORLD_SCENE = "res://World/OverWorld.tscn"
 var DUNGEON_SCENE = "res://World/Dungeon/Dungeon.tscn"
-
+var GAME_OVER_SCENE = "res://UI/screens/GameOver/GameOver.tscn"
 
 signal level_changed(level)
 signal points_changed(points)
