@@ -117,4 +117,4 @@ func quitGame():
 	get_tree().network_peer = null
 	GameManager.reset()
 	player_info = {}
-	GameManager.change_scene(GameManager.MULTIPLAYER_MENU)
+	get_tree().change_scene(GameManager.MULTIPLAYER_MENU)
