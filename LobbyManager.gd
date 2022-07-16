@@ -30,7 +30,7 @@ func _player_disconnected(id):
 # Only called on clients, not server. Will go unused; not useful here.
 func _connected_ok():
 	print("connected!")
-	get_tree().change_scene(GameManager.LOBBY_SCENE)
+	GameManager.change_scene(GameManager.LOBBY_SCENE)
 
 # Server kicked us; show error and abort.
 func _server_disconnected():
@@ -39,36 +39,36 @@ func _server_disconnected():
  # Could not even connect to server; abort.
 func _connected_fail():
 	print("unable to connect")
-	
+
 remote func register_player(info):
 	print("register player:", info)
 	# Get the id of the RPC sender.
 	var id = get_tree().get_rpc_sender_id()
 	# Store the info
 	player_info[id] = info
-	
+
 
 remote func pre_configure_game():
 
 	var selfPeerID = get_tree().get_network_unique_id()
 	if is_network_master():
 		GameManager.create_seed()
-		
-	#need to do the emit/signal stuff here, 1 will be the server so it should gen then others should 
+
+	#need to do the emit/signal stuff here, 1 will be the server so it should gen then others should
 	# consume the signal and get the new seed
 	#if 1 == selfPeerID:
 	#	GameManager.create_seed()
-	#else: 
+	#else:
 	#	GameManager.seed = rpc_id(selfPeerID, "get_initial_seed")
-		
+
 	# Load world
 
-	GameManager.change_scene("res://World/OverWorld.tscn")
-	
+	GameManager.change_scene(GameManager.OVERWORLD_SCENE)
+
 	var players_node = Node.new()
 	players_node.name = "players"
 	get_node("/root").add_child(players_node)
-	
+
 	# Load my player
 	var my_player = preload("res://Player/Player.tscn").instance()
 	my_player.set_name(str(selfPeerID))
@@ -92,7 +92,7 @@ remote func pre_configure_game():
 		post_configure_game()
 
 
-	
+
 remote func post_configure_game():
 	# Only the server is allowed to tell a client to unpause
 
@@ -101,20 +101,20 @@ remote func post_configure_game():
 		# Game starts now!
 
 func startGame():
-	
+
 	for player in LobbyManager.player_info:
 		rpc_id(player, "pre_configure_game")
 	pre_configure_game()
 
-	
+
 func joinGame(ip, port):
 	var peer = NetworkedMultiplayerENet.new()
 	peer.create_client(ip, port)
 	get_tree().network_peer = peer
 
-	
+
 func quitGame():
 	get_tree().network_peer = null
 	GameManager.reset()
 	player_info = {}
-	get_tree().change_scene(GameManager.MULTIPLAYER_MENU)
+	GameManager.change_scene(GameManager.MULTIPLAYER_MENU)

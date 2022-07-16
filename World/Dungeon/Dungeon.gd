@@ -18,7 +18,7 @@ var textureScale = 0.7
 func _ready():
 	var mapHeight = generator.tile_size * generator.mapHeight
 	var mapWidth = generator.tile_size * generator.mapWidth
-	
+
 	background.region_enabled = true
 	background.centered = false
 	print("Width:"+str(mapWidth))
@@ -30,7 +30,7 @@ func _ready():
 	#camera.limit_top = -backgroundBuffer
 	#camera.limit_right = mapWidth + backgroundBuffer
 	#camera.limit_bottom = mapHeight + backgroundBuffer
-	
+
 	mapMaker.make_maze()
 	#place enemies, treasures and exits. This is handled here so that the dungeon
 	#can determine the sprites for these things.
@@ -40,21 +40,21 @@ func _on_ProceduralMazeLevel_addEntrance(position: Vector2):
 	entrance.position = position
 	var connectionResults = entrance.connect("exit_dungeon", self, "_on_exit_dungeon")
 	entranceContainer.add_child(entrance)
-	
+
 func _on_exit_dungeon(body):
 	print("popup exit confirmation")
 	confirm_exit();
 
 func confirm_exit():
 	print("show exit dungeon confirmation")
-	$CanvasLayer/ConfirmExit.popup_centered()  # FIXME doesn't pop up 
+	$CanvasLayer/ConfirmExit.popup_centered()  # FIXME doesn't pop up
 
 func _on_ProceduralMazeLevel_addExits(positions):
 	for position in positions:
 		var exit = mapMaker.exitScene.instance()
 		exit.position = position
 		exitsContainer.add_child(exit)
-		
+
 
 func _on_ProceduralMazeLevel_addTreasure(positions):
 	if (mapMaker.treasureOptions.size() > 0):
@@ -65,7 +65,7 @@ func _on_ProceduralMazeLevel_addTreasure(positions):
 			treasure.position = position
 			treasuresContainer.add_child(treasure)
 
-func _on_ProceduralMazeLevel_addEnemies(positions):		
+func _on_ProceduralMazeLevel_addEnemies(positions):
 	if (mapMaker.enemyOptions.size() > 0):
 		var filteredEnemyOptions = getValidArrayIndexes(GameManager.level, mapMaker.enemySpawnLevels)
 		for position in positions:
@@ -81,16 +81,14 @@ func getValidArrayIndexes(var level: int, var levelList):
 		var itemLvl = levelList[n]
 		print(str(itemLvl) +" <= "+str(level) +" = "+str(itemLvl <= level))
 		if (itemLvl <= level):
-			validIndex.push_back(n)	
+			validIndex.push_back(n)
 	return validIndex
 
 
 func _on_ConfirmExit_confirmed():
-	get_tree().change_scene("res://World/OverWorld.tscn")
+	GameManager.change_scene(GameManager.OVERWORLD_SCENE)
 	var player = $SpriteLayer/Player
 	GameManager.level = 0
-	pass # Replace with function body.
-
 
 func _on_AudioStreamPlayer_finished():
 	$AudioStreamPlayer.play()

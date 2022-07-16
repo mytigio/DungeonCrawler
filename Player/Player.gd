@@ -31,7 +31,7 @@ onready var hurtBox = $HurtBox
 onready var blinkPlayer = $FlashAnimationPlayer
 
 func _ready():
-	stats.connect("no_health", self, "queue_free")
+	stats.connect("no_health", self, "_on_no_health")
 	set_weapon_info()
 	animationTree.active = true
 	swordHitbox.knockback_vector = roll_vector
@@ -146,6 +146,12 @@ func _on_HurtBox_area_entered(area):
 func _on_HurtBox_invincibility_started():
 	blinkPlayer.play("Start")
 
-
 func _on_HurtBox_invincibility_ended():
 	blinkPlayer.play("Stop")
+
+func _on_no_health():
+	print("player died!")
+	self.queue_free()
+	GameManager.change_scene(GameManager.GAME_OVER)
+
+	
