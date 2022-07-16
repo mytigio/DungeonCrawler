@@ -30,7 +30,7 @@ func _player_disconnected(id):
 # Only called on clients, not server. Will go unused; not useful here.
 func _connected_ok():
 	print("connected!")
-	GameManager.change_scene(GameManager.LOBBY_SCENE)
+	get_tree().change_scene(GameManager.LOBBY_SCENE)
 
 # Server kicked us; show error and abort.
 func _server_disconnected():
