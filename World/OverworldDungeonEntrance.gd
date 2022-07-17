@@ -20,7 +20,6 @@ func _on_ConfirmationDialog_confirmed():
 	baseDungeonInfo = dungeon_info
 	
 	var newScene = getNewDungeonLevel(Vector2.ZERO)
-	newScene.setBaseDungeonInfo(baseDungeonInfo)
 	
 	# set player position only the one that entered
 	var exit = (newScene.entranceContainer as YSort).get_child(0)

@@ -8,7 +8,6 @@ export(String) var baseDungeonInfo
 func getNewDungeonLevel(position_to_use: Vector2) -> Node:
 	print("start dungeon")
 	GameManager.level += dungeonLevel
-	#var position_to_use = position
 	var dungeon_info = baseDungeonInfo + "_" + str(position_to_use.x)+"_"+str(position_to_use.y)+"_"+str(GameManager.level)
 	GameManager.levelSeed = (dungeon_info).hash()
 	# load the new level
@@ -21,11 +20,10 @@ func _on_DungeonEntrance_body_entered(body):
 		var newScene = getNewDungeonLevel(global_position)
 		
 		# set player position only the one that entered		
-		var exit = get_node(str(newScene.get_path()) + "/YSort/Entrances/DungeonExit")
+		var exit = (newScene.entranceContainer as YSort).get_child(0)
 		var position = Vector2(exit.position.x + 10, exit.position.y + 10)
 		body.position = position
 		body.get_node("Light").enabled = true
-
 
 func _on_DungeonEntrance_body_exited(body):
 	active = true

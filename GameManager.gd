@@ -1,9 +1,18 @@
 extends Node
 
 export(int) var initial_seed = 0 setget set_seed
+
+#this needs to move as each player has their own level.  Perhaps it moves to the
+#dungeon object and we restructure how dungeons work?
 var level = 0 setget set_level
+
+#not sure where to put this, but not here.
 var levelSeed = 0
+
+#need to replace this with a variable on the player instead.
 var overworld_entrance_position
+
+#need to replace this with a variable on the player instead?
 var points = 0 setget set_points
 
 var SERVER_PORT = 444
@@ -49,12 +58,14 @@ func create_seed():
 		initial_seed = randi()
 	print("Initial Game Seed:"+str(initial_seed))
 	seed(initial_seed)
+	rpc("set_seed", initial_seed)
 	
 remote func get_seed():
 	GameManager.initial_seed
 	
 remote func set_seed(new_seed):
 	initial_seed = new_seed
+	seed(initial_seed)
 
 func change_scene(scene_resource, nodeName: String = "world", player = null) -> Node:
 	# load new scene
