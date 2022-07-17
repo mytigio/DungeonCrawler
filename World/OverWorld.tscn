@@ -688,8 +688,8 @@ position = Vector2( 208, 8 )
 position = Vector2( 304, 104 )
 
 [node name="OverworldDungeonEntrance" parent="." instance=ExtResource( 13 )]
-position = Vector2( 48.2451, 304 )
-dungeonLevel = 10
+position = Vector2( 48, 304 )
+dungeonLevel = 20
 
 [node name="SlimeMonster" parent="." instance=ExtResource( 15 )]
 material = SubResource( 55 )

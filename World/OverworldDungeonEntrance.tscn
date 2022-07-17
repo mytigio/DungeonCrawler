@@ -20,4 +20,5 @@ margin_right = 200.0
 margin_bottom = 70.0
 dialog_text = "Enter dungeon?"
 
+[connection signal="body_entered" from="." to="." method="_on_OverworldDungeonEntrance_body_entered"]
 [connection signal="confirmed" from="CanvasLayer/ConfirmationDialog" to="." method="_on_ConfirmationDialog_confirmed"]
