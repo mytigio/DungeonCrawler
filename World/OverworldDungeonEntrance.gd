@@ -1,8 +1,9 @@
-extends Area2D
+extends "res://World/Dungeon/DungeonEntrance.gd"
 
-var active = false
 var body
-export(int) var dungeonLevel = 1
+
+func _on_ready():
+	active = false
 
 func show_dialog(body):
 	self.body = body
@@ -11,19 +12,17 @@ func show_dialog(body):
 signal enter_dungeon_confirmed
 
 func _on_ConfirmationDialog_confirmed():
-	print("start dungeon")
-	GameManager.level = dungeonLevel
-	GameManager.overworld_entrance_position = global_position
-	GameManager.levelSeed = (str(GameManager.initial_seed)+"_"+str(global_position)+"_"+str(dungeonLevel)).hash()
-
-	# load the new level
-	GameManager.change_scene(GameManager.DUNGEON_SCENE)
-
+	print("start dungeon")	
+	var position_to_use = position
+	GameManager.overworld_entrance_position = position_to_use
+	var dungeon_info = "dungeon_" + str(GameManager.initial_seed)+"_"+str(position_to_use.x)+"_"+str(position_to_use.y)
+	#set initial dungeon info
+	baseDungeonInfo = dungeon_info
+	
+	var newScene = getNewDungeonLevel(Vector2.ZERO)
+	newScene.setBaseDungeonInfo(baseDungeonInfo)
+	
 	# set player position only the one that entered
-	var exit = get_node("/root/world/YSort/Entrances/DungeonExit")
+	var exit = (newScene.entranceContainer as YSort).get_child(0)
 	var position = Vector2(exit.position.x + 10, exit.position.y + 10)
 	body.position = position
-
-
-
-

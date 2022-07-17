@@ -84,7 +84,8 @@ remote func pre_configure_game():
 
 	# Tell server (remember, server is always ID=1) that this peer is done pre-configuring.
 	# The server can call get_tree().get_rpc_sender_id() to find out who said they were done.
-	get_node("/root/LobbyMenu").queue_free()
+	
+	#get_node("/root/LobbyMenu").queue_free()
 	if not get_tree().is_network_server():
 		# Tell server we are ready to start.
 		rpc_id(1, "post_configure_game", get_tree().get_network_unique_id())

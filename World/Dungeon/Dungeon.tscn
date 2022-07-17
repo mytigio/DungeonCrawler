@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://World/Dungeon/Dungeon.gd" type="Script" id=1]
 [ext_resource path="res://World/Dungeon/DungeonTileSet32x32.tres" type="TileSet" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://Enemies/MudMonster/MudMonster.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Items/LargeEnergyPotion.tscn" type="PackedScene" id=5]
 [ext_resource path="res://World/ProceduralMazeLevel.tscn" type="PackedScene" id=6]
+[ext_resource path="res://World/PositionMarker.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Items/SmallEnergyPotion.tscn" type="PackedScene" id=9]
 [ext_resource path="res://World/Dungeon/DungeonEntrance.tscn" type="PackedScene" id=11]
 [ext_resource path="res://World/Hazards/Lava.tres" type="Texture" id=12]
@@ -73,7 +74,10 @@ cell_y_sort = true
 [node name="DecorationsMap" parent="YSort/ProceduralMazeLevel" index="2"]
 tile_data = PoolIntArray( 196613, 30, 0, 196615, 29, 0, 196616, 29, 0, 196617, 27, 0, 196618, 27, 0, 196619, 30, 0, 262149, 27, 0, 262152, 25, 0, 262155, 26, 0, 327685, 27, 0, 327688, 25, 0, 327691, 25, 0, 393221, 29, 0, 393222, 25, 0, 393223, 25, 0, 393225, 29, 0, 393226, 29, 0, 393227, 28, 0, 458757, 30, 0, 524293, 30, 0, 524296, 26, 0, 524299, 27, 0, 589829, 26, 0, 589830, 30, 0, 589831, 28, 0, 589832, 26, 0, 589833, 26, 0, 589834, 28, 0, 589835, 27, 0 )
 
+[node name="PositionMarker" parent="YSort" instance=ExtResource( 7 )]
+
 [node name="CanvasModulate" type="CanvasModulate" parent="YSort"]
+visible = false
 color = Color( 0, 0, 0, 1 )
 
 [node name="Entrances" type="YSort" parent="YSort"]
