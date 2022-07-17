@@ -1,6 +1,7 @@
 extends Node2D
 
 const DungeonExit = preload("DungeonExit.gd")
+const DungeonEntrance = preload("DungeonEntrance.gd")
 
 onready var mapMaker = $YSort/ProceduralMazeLevel
 #onready var camera = $PlayerCamera
@@ -10,6 +11,8 @@ onready var entranceContainer = $YSort/Entrances
 onready var exitsContainer = $YSort/Exits
 onready var treasuresContainer = $YSort/Treasures
 onready var enemyContainer = $YSort/Enemies
+
+var baseDungeonInfo
 
 export(int) var backgroundBuffer = 10
 var textureScale = 0.7
@@ -51,11 +54,13 @@ func confirm_exit():
 
 func _on_ProceduralMazeLevel_addExits(positions):
 	for position in positions:
-		var exit = mapMaker.exitScene.instance()
+		var exit = mapMaker.exitScene.instance() as DungeonEntrance
+		exit.baseDungeonInfo = baseDungeonInfo
 		exit.position = position
 		exitsContainer.add_child(exit)
 
-
+#accepts an RNG to use so that we can use a seeded RNG for the specific dungeon level.
+#this ensures consistancy based on the world, dunegon and entrance seed from visit to visit.
 func _on_ProceduralMazeLevel_addTreasure(positions, rng: RandomNumberGenerator):
 	if (mapMaker.treasureOptions.size() > 0):
 		var filteredOptions = getValidArrayIndexes(GameManager.level, mapMaker.treasureSpawnLevels)
@@ -65,7 +70,8 @@ func _on_ProceduralMazeLevel_addTreasure(positions, rng: RandomNumberGenerator):
 			treasure.position = position
 			treasuresContainer.add_child(treasure)
 
-
+#accepts an RNG to use so that we can use a seeded RNG for the specific dungeon level.
+#this ensures consistancy based on the world, dunegon and entrance seed from visit to visit.
 func _on_ProceduralMazeLevel_addEnemies(positions, rng: RandomNumberGenerator):		
 	if (mapMaker.enemyOptions.size() > 0):
 		var filteredEnemyOptions = getValidArrayIndexes(GameManager.level, mapMaker.enemySpawnLevels)
@@ -90,6 +96,13 @@ func _on_ConfirmExit_confirmed():
 	GameManager.change_scene(GameManager.OVERWORLD_SCENE)
 	var player = $SpriteLayer/Player
 	GameManager.level = 0
+	
+func setBaseDungeonInfo(info: String):	
+	baseDungeonInfo = info
+	var exits = exitsContainer.get_children()
+	for exit in exits:
+		var entrance = exit as DungeonEntrance
+		entrance.baseDungeonInfo = baseDungeonInfo
 
 func _on_AudioStreamPlayer_finished():
 	$AudioStreamPlayer.play()
