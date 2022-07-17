@@ -7,9 +7,9 @@ export(String) var baseDungeonInfo
 
 func getNewDungeonLevel(position_to_use: Vector2) -> Node:
 	print("start dungeon")
-	GameManager.level = dungeonLevel
+	GameManager.level += dungeonLevel
 	#var position_to_use = position
-	var dungeon_info = baseDungeonInfo + "_" + str(position_to_use.x)+"_"+str(position_to_use.y)+"_"+str(dungeonLevel)
+	var dungeon_info = baseDungeonInfo + "_" + str(position_to_use.x)+"_"+str(position_to_use.y)+"_"+str(GameManager.level)
 	GameManager.levelSeed = (dungeon_info).hash()
 	# load the new level
 	var newScene = GameManager.change_scene(GameManager.DUNGEON_SCENE, dungeon_info)
