@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://World/Dungeon/ConfirmDungeonExit.gd" type="Script" id=1]
+[ext_resource path="res://UI/screens/PauseMenu/PauseMenu.tscn" type="PackedScene" id=2]
+[ext_resource path="res://UI/HealthUI.tscn" type="PackedScene" id=3]
+
+[node name="CanvasLayer" type="CanvasLayer"]
+
+[node name="HealthUI" parent="." instance=ExtResource( 3 )]
+
+[node name="PauseMenu" parent="." instance=ExtResource( 2 )]
+
+[node name="ConfirmExit" type="ConfirmationDialog" parent="."]
+margin_left = 88.0
+margin_top = 64.0
+margin_right = 267.0
+margin_bottom = 122.0
+rect_min_size = Vector2( 150, 30 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+window_title = "Exit Dungeon?"
+script = ExtResource( 1 )

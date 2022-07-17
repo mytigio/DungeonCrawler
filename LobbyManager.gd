@@ -3,6 +3,7 @@
 extends Node
 
 # Connect all functions
+signal game_ended()
 
 func _ready():
 	print("lobby manager ready ")
@@ -38,7 +39,7 @@ func _server_disconnected():
  # Could not even connect to server; abort.
 func _connected_fail():
 	print("unable to connect")
-	
+
 remote func register_player(info):
 	print("register player:", info)
 	# Get the id of the RPC sender.
@@ -46,4 +47,74 @@ remote func register_player(info):
 	# Store the info
 	player_info[id] = info
 
-	# Call function to update lobby UI here
+
+remote func pre_configure_game():
+
+	var selfPeerID = get_tree().get_network_unique_id()
+	if is_network_master():
+		GameManager.create_seed()
+
+	#need to do the emit/signal stuff here, 1 will be the server so it should gen then others should
+	# consume the signal and get the new seed
+	#if 1 == selfPeerID:
+	#	GameManager.create_seed()
+	#else:
+	#	GameManager.seed = rpc_id(selfPeerID, "get_initial_seed")
+
+	# Load world
+
+	GameManager.change_scene(GameManager.OVERWORLD_SCENE)
+
+	var players_node = Node.new()
+	players_node.name = "players"
+	get_node("/root").add_child(players_node)
+
+	# Load my player
+	var my_player = preload("res://Player/Player.tscn").instance()
+	my_player.set_name(str(selfPeerID))
+	my_player.set_network_master(selfPeerID) # Will be explained later
+	get_node("/root/players").add_child(my_player)
+
+	# Load other players
+	for p in player_info:
+		var player = preload("res://Player/Player.tscn").instance()
+		player.set_name(str(p))
+		player.set_network_master(p) # Will be explained later
+		get_node("/root/players").add_child(player)
+
+	# Tell server (remember, server is always ID=1) that this peer is done pre-configuring.
+	# The server can call get_tree().get_rpc_sender_id() to find out who said they were done.
+	get_node("/root/LobbyMenu").queue_free()
+	if not get_tree().is_network_server():
+		# Tell server we are ready to start.
+		rpc_id(1, "post_configure_game", get_tree().get_network_unique_id())
+	elif player_info.size() == 0:
+		post_configure_game()
+
+
+
+remote func post_configure_game():
+	# Only the server is allowed to tell a client to unpause
+
+	if 1 == get_tree().get_rpc_sender_id():
+		get_tree().set_pause(false)
+		# Game starts now!
+
+func startGame():
+
+	for player in LobbyManager.player_info:
+		rpc_id(player, "pre_configure_game")
+	pre_configure_game()
+
+
+func joinGame(ip, port):
+	var peer = NetworkedMultiplayerENet.new()
+	peer.create_client(ip, port)
+	get_tree().network_peer = peer
+
+
+func quitGame():
+	get_tree().network_peer = null
+	GameManager.reset()
+	player_info = {}
+	get_tree().change_scene(GameManager.MULTIPLAYER_MENU)
