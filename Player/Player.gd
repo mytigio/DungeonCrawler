@@ -9,6 +9,7 @@ var block_stamina_drain = false
 
 puppet var puppet_input = Vector2()
 puppet var puppet_state = "IDLE"
+puppet var puppet_light_enabled = false
 
 enum {
 	MOVE,
@@ -83,8 +84,12 @@ func move_state(delta, input_vector: Vector2):
 	if (Input.is_action_just_pressed("attack")):
 		state = ATTACK
 	
-	if (Input.is_action_just_pressed("light")):
-		$Light.enabled = !$Light.enabled
+	if is_network_master():
+		if Input.is_action_just_pressed("light"):
+			$Light.enabled = !$Light.enabled
+			rset("puppet_light_enabled", $Light.enabled)
+	else:
+		$Light.enabled = puppet_light_enabled
 	
 	if (Input.is_action_just_pressed("escape_menu")):
 		var escapeOverlay = $CanvasLayer/PauseMenu/Popup

@@ -25,13 +25,14 @@ func _ready():
 	print("Height:"+str(mapHeight))
 	background.region_rect = Rect2(-64, -64, mapWidth+64, mapHeight+64)
 
-
 	#camera.limit_left = -backgroundBuffer
 	#camera.limit_top = -backgroundBuffer
 	#camera.limit_right = mapWidth + backgroundBuffer
 	#camera.limit_bottom = mapHeight + backgroundBuffer
 
 	mapMaker.make_maze()
+
+
 	#place enemies, treasures and exits. This is handled here so that the dungeon
 	#can determine the sprites for these things.
 
