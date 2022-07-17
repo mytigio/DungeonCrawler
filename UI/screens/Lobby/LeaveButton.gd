@@ -12,7 +12,7 @@ func _ready():
 
 func _button_pressed():
 	get_tree().network_peer = null
-	get_tree().change_scene(GameManager.MULTIPLAYER_MENU)
+	GameManager.change_scene(GameManager.MULTIPLAYER_MENU)
 
 
 
