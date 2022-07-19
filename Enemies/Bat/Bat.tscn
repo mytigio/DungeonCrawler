@@ -103,7 +103,6 @@ max_health = 4
 material = ExtResource( 3 )
 frames = SubResource( 11 )
 animation = "Flight"
-frame = 1
 playing = true
 offset = Vector2( 0, -12 )
 
