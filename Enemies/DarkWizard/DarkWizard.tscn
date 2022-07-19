@@ -94,7 +94,6 @@ texture = ExtResource( 3 )
 material = ExtResource( 11 )
 frames = SubResource( 8 )
 animation = "Move"
-frame = 2
 playing = true
 offset = Vector2( 0, -8 )
 
@@ -112,6 +111,7 @@ timer_min_time = 3
 timer_max_time = 6
 
 [node name="DetectionBox" parent="." instance=ExtResource( 10 )]
+visible = false
 collision_mask = 2
 
 [node name="CollisionShape2D" parent="DetectionBox" index="0"]
