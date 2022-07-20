@@ -80,7 +80,7 @@ animations = [ {
 [node name="SummoningCircle" type="AnimatedSprite"]
 frames = SubResource( 7 )
 animation = "Animate"
-frame = 5
+frame = 9
 playing = true
 script = ExtResource( 2 )
 
