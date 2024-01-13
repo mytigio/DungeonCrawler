@@ -1,4 +1,4 @@
-extends Button
+extends Node
 
 
 # Declare member variables here. Examples:
@@ -8,12 +8,7 @@ extends Button
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	self.connect("pressed", self, "_button_pressed")
-
-func _button_pressed():
-	get_tree().network_peer = null
-	GameManager.change_scene(GameManager.MULTIPLAYER_MENU)
-
+	pass # Replace with function body.
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

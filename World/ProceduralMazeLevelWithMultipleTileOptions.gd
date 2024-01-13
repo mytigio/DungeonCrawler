@@ -180,7 +180,6 @@ func placeFloorTile(cell):
 func erase_walls():
 	var calculatedPercent = percent_walls_to_remove / 100.0
 	var wallsToRemove = int(width * height * calculatedPercent)
-	print("Remove "+str(wallsToRemove)+" walls.")
 	for i in range(wallsToRemove):
 		var xOptions = rng.randi_range(1,width-1)
 		var x = xOptions*spacing
@@ -189,7 +188,7 @@ func erase_walls():
 		var wallToErase = Vector2(x, y)
 		var erasedCellWalls = cell_properties[wallToErase]
 		#pick a neighbor
-		var neighbor = cell_walls.keys()[randi() % cell_walls.size()]
+		var neighbor = cell_walls.keys()[rng.randi() % cell_walls.size()]
 		#check if a wall between them exists.
 		if (erasedCellWalls & cell_walls[neighbor]):
 			var walls = cell_properties[wallToErase] - cell_walls[neighbor]
@@ -372,7 +371,7 @@ func setTreasurePositions(availablePositions):
 		treasures.append(mapOffset+treasurePos)
 	
 	print("Treasure placed at: "+str(treasures))
-	emit_signal("addTreasure", treasures)
+	emit_signal("addTreasure", treasures, rng)
 
 func setEnemyPositions(availablePositions):
 	print("Try to place "+str(enemyCount)+" enemies")
@@ -385,7 +384,7 @@ func setEnemyPositions(availablePositions):
 		enemies.append(mapOffset+enemyPos)
 		
 	print("Enemies placed at: "+str(enemies))
-	emit_signal("addEnemies", enemies)
+	emit_signal("addEnemies", enemies, rng)
 
 func predictable_shuffle(arrayToShuffle):
 	for n in arrayToShuffle.size():
@@ -396,5 +395,5 @@ func predictable_shuffle(arrayToShuffle):
 
 signal addEntrance(position)
 signal addExits(positions)
-signal addTreasure(positions)
-signal addEnemies(positions)
+signal addTreasure(positions, rng)
+signal addEnemies(positions, rng)

@@ -1,14 +1,17 @@
-[gd_scene load_steps=60 format=2]
+[gd_scene load_steps=63 format=2]
 
 [ext_resource path="res://Player/Player.png" type="Texture" id=1]
 [ext_resource path="res://Player/Player.gd" type="Script" id=2]
 [ext_resource path="res://HitBoxes_HurtBoxes/Hitbox.tscn" type="PackedScene" id=3]
+[ext_resource path="res://UI/CanvasLayer.tscn" type="PackedScene" id=4]
 [ext_resource path="res://HitBoxes_HurtBoxes/HurtBox.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Shadows/MediumShadow.png" type="Texture" id=6]
 [ext_resource path="res://Music and Sounds/Swipe.wav" type="AudioStream" id=7]
 [ext_resource path="res://Music and Sounds/Evade.wav" type="AudioStream" id=8]
 [ext_resource path="res://WhiteColor.gdshader" type="Shader" id=9]
+[ext_resource path="res://Effects/Light.png" type="Texture" id=10]
 [ext_resource path="res://Items/SwingingWeapon.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Player/PlayerCamera.tscn" type="PackedScene" id=12]
 
 [sub_resource type="ShaderMaterial" id=2]
 shader = ExtResource( 9 )
@@ -906,6 +909,8 @@ script = ExtResource( 2 )
 MAX_SPEED = 100
 INVINCIBILITY_AFTER_HIT = 0.75
 
+[node name="CanvasLayer" parent="." instance=ExtResource( 4 )]
+
 [node name="ShadowSprite" type="Sprite" parent="."]
 position = Vector2( 0, 3 )
 texture = ExtResource( 6 )
@@ -986,6 +991,27 @@ shape = SubResource( 52 )
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 7 )
 
+[node name="Light" type="Light2D" parent="."]
+position = Vector2( 0, -11 )
+scale = Vector2( 1.01769, 1.14977 )
+enabled = false
+texture = ExtResource( 10 )
+texture_scale = 1.25
+color = Color( 0.733333, 0.65098, 0.458824, 1 )
+shadow_enabled = true
+shadow_color = Color( 0, 0, 0, 1 )
+shadow_filter_smooth = 0.3
+
+[node name="PlayerCamera" parent="." instance=ExtResource( 12 )]
+position = Vector2( 8, 8 )
+current = false
+
+[node name="BottomRight" parent="PlayerCamera/Limits" index="0"]
+position = Vector2( 1704, 1384 )
+
+[node name="TopLeft" parent="PlayerCamera/Limits" index="1"]
+position = Vector2( -1648, -1104 )
+
 [connection signal="area_entered" from="HurtBox" to="." method="_on_HurtBox_area_entered"]
 [connection signal="invincibility_ended" from="HurtBox" to="." method="_on_HurtBox_invincibility_ended"]
 [connection signal="invincibility_started" from="HurtBox" to="." method="_on_HurtBox_invincibility_started"]
@@ -994,3 +1020,4 @@ stream = ExtResource( 7 )
 [editable path="SwingingWeapon/Hitbox"]
 [editable path="RollhitboxPivot/Hitbox"]
 [editable path="HurtBox"]
+[editable path="PlayerCamera"]

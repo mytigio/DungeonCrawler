@@ -7,6 +7,10 @@ onready var ROLL_SPEED = MAX_SPEED * 2
 
 var block_stamina_drain = false
 
+puppet var puppet_input = Vector2()
+puppet var puppet_state = "IDLE"
+puppet var puppet_light_enabled = false
+
 enum {
 	MOVE,
 	ROLL,
@@ -26,27 +30,39 @@ onready var sword = $SwingingWeapon
 onready var swordHitbox = $SwingingWeapon/Hitbox
 onready var hurtBox = $HurtBox
 onready var blinkPlayer = $FlashAnimationPlayer
+onready var camera = $PlayerCamera
 
 func _ready():
-	stats.connect("no_health", self, "queue_free")
+	stats.connect("no_health", self, "_on_no_health")
 	set_weapon_info()
 	animationTree.active = true
 	swordHitbox.knockback_vector = roll_vector
+	if is_network_master():
+		camera.make_current()
 
 # Called when the node enters the scene tree for the first time.
 func _physics_process(delta):
+	#input vector:
+	var input_vector = Vector2.ZERO
+	if is_network_master():
+		input_vector.x = (Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left"))
+		input_vector.y = (Input.get_action_strength("ui_down") - Input.get_action_strength("ui_up"))
+		# set other players
+		rset("puppet_input", input_vector)
+		rset("puppet_state", state)
+	else:
+		input_vector = puppet_input
+		state = puppet_state
+	
 	match state:
 		MOVE:
-			move_state(delta)
+			move_state(delta, input_vector)
 		ROLL:
 			role_state(delta)
 		ATTACK:
 			attack_state(delta)
 
-func move_state(delta):
-	var input_vector = Vector2.ZERO
-	input_vector.x = (Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left"))
-	input_vector.y = (Input.get_action_strength("ui_down") - Input.get_action_strength("ui_up"))
+func move_state(delta, input_vector: Vector2):
 	animationState.travel("Run")
 	input_vector = input_vector.normalized()
 	if (input_vector != Vector2.ZERO):
@@ -69,8 +85,15 @@ func move_state(delta):
 	if (Input.is_action_just_pressed("attack")):
 		state = ATTACK
 	
+	if is_network_master():
+		if Input.is_action_just_pressed("light"):
+			$Light.enabled = !$Light.enabled
+			rset("puppet_light_enabled", $Light.enabled)
+	else:
+		$Light.enabled = puppet_light_enabled
+	
 	if (Input.is_action_just_pressed("escape_menu")):
-		var escapeOverlay = get_node("/root/OverWorld/CanvasLayer/PauseMenu/Popup")
+		var escapeOverlay = $CanvasLayer/PauseMenu/Popup
 		print("escape menu triggered")
 		if (!escapeOverlay.visible):
 			escapeOverlay.show()
@@ -129,6 +152,13 @@ func _on_HurtBox_area_entered(area):
 func _on_HurtBox_invincibility_started():
 	blinkPlayer.play("Start")
 
-
 func _on_HurtBox_invincibility_ended():
 	blinkPlayer.play("Stop")
+
+func _on_no_health():
+	print("player died!")
+	self.queue_free()
+	GameManager.reset()
+	get_tree().change_scene(GameManager.GAME_OVER_SCENE)
+
+	

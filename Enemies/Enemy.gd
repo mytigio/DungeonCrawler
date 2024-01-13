@@ -8,6 +8,8 @@ enum {
 	CHASE
 }
 
+var id
+
 var level = 1
 
 var target = null
@@ -23,6 +25,8 @@ export(int) var FRICTION = 20
 var velocity = Vector2.ZERO
 var knockback = Vector2.ZERO
 
+var initialized = false
+
 onready var sprite = $Sprite
 onready var stats = $Stats
 onready var hurtBox = $HurtBox
@@ -32,26 +36,46 @@ onready var detectionArea: Area2D = $DetectionBox
 onready var blinkPlayer = $BlinkAnimationPlayer
 
 func _ready():
+	#if (is_network_master()):
+	id = hash(get_instance_id())
+	#name = name + "_" + str(id)
 	stats.level = level
 	stats.max_health = stats.max_health+log(level+1)
 	stats.health = stats.max_health
+	initialized = true
+	#else:
+		#rpc_id(1, "request_initialization")
+		
+master func request_initialization():
+	rpc_id(get_tree().get_rpc_sender_id(), "initialize", id, name, stats.level, stats.max_health, stats.health)
+
+puppet func initialize(node_id, node_name, level, max_health, health):
+	id = node_id
+	name = node_name
+	stats.level = level
+	stats.max_health = max_health
+	stats.health = health
+	initialized = true
 
 func _physics_process(delta):
-	if (knockback):
-		knockback = knockback.move_toward(Vector2.ZERO, 200 * delta)
-		knockback = move(knockback)
-	
-	match state:
-		IDLE: 
-			idleState(delta)
-		WANDER:
-			wanderState(delta)
-		CHASE:
-			chaseState(delta)
-			
-	if softCollision.is_colliding():
-		velocity += (softCollision.get_push_vector() * delta * MAX_SPEED)
-	move(velocity)
+	if(is_network_master()):
+		if (knockback):
+			knockback = knockback.move_toward(Vector2.ZERO, 200 * delta)
+			knockback = move(knockback)
+		
+		match state:
+			IDLE: 
+				idleState(delta)
+			WANDER:
+				wanderState(delta)
+			CHASE:
+				chaseState(delta)
+				
+		if softCollision.is_colliding():
+			velocity += (softCollision.get_push_vector() * delta * MAX_SPEED)
+		
+		move(velocity)
+		rpc_unreliable("sync_puppets", velocity, position, state)
 
 func sightCheck():
 	var space_state = get_world_2d().direct_space_state
@@ -88,10 +112,22 @@ func chaseState(delta):
 func pick_random_state(state_list):
 	state_list.shuffle()
 	return state_list.pop_front()
-	
-func move(velocity):
+
+func setSpriteOrientation(velocity):
 	sprite.flip_h = velocity.x < 0
-	return move_and_slide(velocity)
+
+func move(velocity):
+	setSpriteOrientation(velocity)
+	move_and_slide(velocity)
+	
+puppet func sync_puppets(velocity, final_position, master_state):
+	if (initialized):
+		setSpriteOrientation(velocity)
+		move_and_slide(velocity)
+		#reset the position to the servers position regardless of the calculated outcome.
+		position = final_position
+		state = master_state
+	
 	
 func setLevel(level: int):
 	if (level < 1):
@@ -100,25 +136,39 @@ func setLevel(level: int):
 	
 
 func _on_HurtBox_area_entered(area):
-	if (hurtBox.invincible == false):
+	if (is_network_master() and hurtBox.invincible == false):
 		knockback = area.knockback_vector * 130
 		print("area.current_damage: " + str(area.current_damage))
 		stats.health -= area.current_damage
 		hurtBox.start_invicibility(0.5)
 		hurtBox.create_hit_effect()
+	else:
+		hurtBox.create_hit_effect()
 
 func _on_Stats_no_health():
+	if (is_network_master()):
+		GameManager.add_points(stats.point_value)
+		rpc("process_death")
+		
+puppetsync func process_death():
 	queue_free()
 	var enemyDeathEffect = DeathEffect.instance()
 	enemyDeathEffect.position = position
-	GameManager.add_points(stats.point_value)
 	get_parent().add_child(enemyDeathEffect)
 
 func _on_DetectionBox_body_entered(body):
-	target = body
-	state = CHASE
+	if (is_network_master()):
+		print(name + " set new target: " + body.name)
+		target = body
+		state = CHASE
+	else:
+		pass
+		
+puppet func detectedPuppet(rpc_id):
+	pass
 
-func _on_DetectionBox_body_exited(body):	
+func _on_DetectionBox_body_exited(body):
+	print(name + " lost target")
 	state = WANDER
 	target = null
 

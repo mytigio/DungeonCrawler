@@ -1,15 +1,16 @@
 extends Area2D
 
 var active = false
+var body
 
 signal exit_dungeon(body)
 
 func _on_DungeonExit_body_entered(body):
-	if (active):
+	self.body = body
+	if active:
 		print("exit dunegon?")
 		emit_signal("exit_dungeon", body)
 
-
 func _on_DungeonExit_body_exited(body):
-	print("leaving area, enable the area detection")
+	print("player walked off the exit steps")
 	active = true

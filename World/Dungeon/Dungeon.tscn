@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://World/Dungeon/Dungeon.gd" type="Script" id=1]
 [ext_resource path="res://World/Dungeon/DungeonTileSet32x32.tres" type="TileSet" id=2]
@@ -6,10 +6,8 @@
 [ext_resource path="res://Enemies/MudMonster/MudMonster.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Items/LargeEnergyPotion.tscn" type="PackedScene" id=5]
 [ext_resource path="res://World/ProceduralMazeLevel.tscn" type="PackedScene" id=6]
-[ext_resource path="res://Player/Player.tscn" type="PackedScene" id=7]
-[ext_resource path="res://UI/HealthUI.tscn" type="PackedScene" id=8]
+[ext_resource path="res://World/PositionMarker.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Items/SmallEnergyPotion.tscn" type="PackedScene" id=9]
-[ext_resource path="res://Player/PlayerCamera.tscn" type="PackedScene" id=10]
 [ext_resource path="res://World/Dungeon/DungeonEntrance.tscn" type="PackedScene" id=11]
 [ext_resource path="res://World/Hazards/Lava.tres" type="Texture" id=12]
 [ext_resource path="res://Enemies/SlimeMonster/SlimeMonster.tscn" type="PackedScene" id=13]
@@ -17,8 +15,6 @@
 [ext_resource path="res://Enemies/Bat/Bat.tscn" type="PackedScene" id=15]
 [ext_resource path="res://Enemies/LargeOrc/LargeOrc.tscn" type="PackedScene" id=16]
 [ext_resource path="res://Music and Sounds/Fantasy Choir 1.wav" type="AudioStream" id=17]
-[ext_resource path="res://Effects/Light.png" type="Texture" id=18]
-[ext_resource path="res://World/Dungeon/ConfirmDungeonExit.gd" type="Script" id=19]
 [ext_resource path="res://Items/GoldenSword.tscn" type="PackedScene" id=20]
 [ext_resource path="res://Items/IronSword.tscn" type="PackedScene" id=21]
 [ext_resource path="res://Items/SteelClaymore.tscn" type="PackedScene" id=22]
@@ -47,32 +43,7 @@ centered = false
 region_enabled = true
 region_rect = Rect2( -64, -64, 564, 564 )
 
-[node name="PlayerCamera" parent="." instance=ExtResource( 10 )]
-position = Vector2( 8, 8 )
-
-[node name="BottomRight" parent="PlayerCamera/Limits" index="0"]
-position = Vector2( 1704, 1384 )
-
-[node name="TopLeft" parent="PlayerCamera/Limits" index="1"]
-position = Vector2( -1648, -1104 )
-
 [node name="YSort" type="YSort" parent="."]
-
-[node name="Player" parent="YSort" instance=ExtResource( 7 )]
-position = Vector2( 8, 8 )
-
-[node name="Light" type="Light2D" parent="YSort/Player"]
-position = Vector2( 0, -11 )
-scale = Vector2( 1.01769, 1.14977 )
-texture = ExtResource( 18 )
-texture_scale = 1.25
-color = Color( 0.733333, 0.65098, 0.458824, 1 )
-shadow_enabled = true
-shadow_color = Color( 0, 0, 0, 1 )
-shadow_filter_smooth = 0.3
-
-[node name="RemoteTransform2D" type="RemoteTransform2D" parent="YSort/Player"]
-remote_path = NodePath("../../../PlayerCamera")
 
 [node name="ProceduralMazeLevel" parent="YSort" instance=ExtResource( 6 )]
 spacing = 3
@@ -103,7 +74,10 @@ cell_y_sort = true
 [node name="DecorationsMap" parent="YSort/ProceduralMazeLevel" index="2"]
 tile_data = PoolIntArray( 196613, 30, 0, 196615, 29, 0, 196616, 29, 0, 196617, 27, 0, 196618, 27, 0, 196619, 30, 0, 262149, 27, 0, 262152, 25, 0, 262155, 26, 0, 327685, 27, 0, 327688, 25, 0, 327691, 25, 0, 393221, 29, 0, 393222, 25, 0, 393223, 25, 0, 393225, 29, 0, 393226, 29, 0, 393227, 28, 0, 458757, 30, 0, 524293, 30, 0, 524296, 26, 0, 524299, 27, 0, 589829, 26, 0, 589830, 30, 0, 589831, 28, 0, 589832, 26, 0, 589833, 26, 0, 589834, 28, 0, 589835, 27, 0 )
 
+[node name="PositionMarker" parent="YSort" instance=ExtResource( 7 )]
+
 [node name="CanvasModulate" type="CanvasModulate" parent="YSort"]
+visible = false
 color = Color( 0, 0, 0, 1 )
 
 [node name="Entrances" type="YSort" parent="YSort"]
@@ -114,33 +88,24 @@ color = Color( 0, 0, 0, 1 )
 
 [node name="Enemies" type="YSort" parent="YSort"]
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-
-[node name="StatsUI" parent="CanvasLayer" instance=ExtResource( 8 )]
-
-[node name="ConfirmExit" type="ConfirmationDialog" parent="CanvasLayer"]
-margin_left = 88.0
-margin_top = 64.0
-margin_right = 267.0
-margin_bottom = 122.0
-rect_min_size = Vector2( 150, 30 )
-size_flags_horizontal = 0
-size_flags_vertical = 0
-window_title = "Exit Dungeon?"
-script = ExtResource( 19 )
-
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 17 )
 volume_db = -6.38
 pitch_scale = 0.8
 autoplay = true
 
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ConfirmExit" type="ConfirmationDialog" parent="CanvasLayer"]
+margin_right = 200.0
+margin_bottom = 70.0
+dialog_text = "Exit dungeon?"
+
 [connection signal="addEnemies" from="YSort/ProceduralMazeLevel" to="." method="_on_ProceduralMazeLevel_addEnemies"]
 [connection signal="addEntrance" from="YSort/ProceduralMazeLevel" to="." method="_on_ProceduralMazeLevel_addEntrance"]
 [connection signal="addExits" from="YSort/ProceduralMazeLevel" to="." method="_on_ProceduralMazeLevel_addExits"]
 [connection signal="addTreasure" from="YSort/ProceduralMazeLevel" to="." method="_on_ProceduralMazeLevel_addTreasure"]
-[connection signal="confirmed" from="CanvasLayer/ConfirmExit" to="." method="_on_ConfirmExit_confirmed"]
 [connection signal="finished" from="AudioStreamPlayer" to="." method="_on_AudioStreamPlayer_finished"]
+[connection signal="confirmed" from="CanvasLayer/ConfirmExit" to="." method="_on_ConfirmExit_confirmed"]
 
-[editable path="PlayerCamera"]
 [editable path="YSort/ProceduralMazeLevel"]
