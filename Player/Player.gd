@@ -30,6 +30,7 @@ onready var sword = $SwingingWeapon
 onready var swordHitbox = $SwingingWeapon/Hitbox
 onready var hurtBox = $HurtBox
 onready var blinkPlayer = $FlashAnimationPlayer
+onready var camera = $PlayerCamera
 
 func _ready():
 	stats.connect("no_health", self, "_on_no_health")
@@ -37,7 +38,7 @@ func _ready():
 	animationTree.active = true
 	swordHitbox.knockback_vector = roll_vector
 	if is_network_master():
-		$PlayerCamera.make_current()
+		camera.make_current()
 
 # Called when the node enters the scene tree for the first time.
 func _physics_process(delta):

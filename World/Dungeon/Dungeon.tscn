@@ -94,10 +94,18 @@ volume_db = -6.38
 pitch_scale = 0.8
 autoplay = true
 
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ConfirmExit" type="ConfirmationDialog" parent="CanvasLayer"]
+margin_right = 200.0
+margin_bottom = 70.0
+dialog_text = "Exit dungeon?"
+
 [connection signal="addEnemies" from="YSort/ProceduralMazeLevel" to="." method="_on_ProceduralMazeLevel_addEnemies"]
 [connection signal="addEntrance" from="YSort/ProceduralMazeLevel" to="." method="_on_ProceduralMazeLevel_addEntrance"]
 [connection signal="addExits" from="YSort/ProceduralMazeLevel" to="." method="_on_ProceduralMazeLevel_addExits"]
 [connection signal="addTreasure" from="YSort/ProceduralMazeLevel" to="." method="_on_ProceduralMazeLevel_addTreasure"]
 [connection signal="finished" from="AudioStreamPlayer" to="." method="_on_AudioStreamPlayer_finished"]
+[connection signal="confirmed" from="CanvasLayer/ConfirmExit" to="." method="_on_ConfirmExit_confirmed"]
 
 [editable path="YSort/ProceduralMazeLevel"]

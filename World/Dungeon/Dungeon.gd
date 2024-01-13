@@ -4,13 +4,14 @@ const DungeonExit = preload("DungeonExit.gd")
 const DungeonEntrance = preload("DungeonEntrance.gd")
 
 onready var mapMaker = $YSort/ProceduralMazeLevel
-#onready var camera = $PlayerCamera
 onready var background = $Background
 onready var generator = $YSort/ProceduralMazeLevel
 onready var entranceContainer = $YSort/Entrances
 onready var exitsContainer = $YSort/Exits
 onready var treasuresContainer = $YSort/Treasures
 onready var enemyContainer = $YSort/Enemies
+onready var players = get_node("/root/players")
+
 
 var baseDungeonInfo
 
@@ -26,14 +27,13 @@ func _ready():
 	print("Width:"+str(mapWidth))
 	print("Height:"+str(mapHeight))
 	background.region_rect = Rect2(-64, -64, mapWidth+64, mapHeight+64)
-
-	#camera.limit_left = -backgroundBuffer
-	#camera.limit_top = -backgroundBuffer
-	#camera.limit_right = mapWidth + backgroundBuffer
-	#camera.limit_bottom = mapHeight + backgroundBuffer
-
+	
+	#for player in players.get_children():
+	#	player.camera.limit_left = -backgroundBuffer
+	#	player.camera.limit_top = -backgroundBuffer
+	#	player.camera.limit_right = mapWidth + backgroundBuffer
+	#	player.camera.limit_bottom = mapHeight + backgroundBuffer
 	mapMaker.make_maze()
-
 
 	#place enemies, treasures and exits. This is handled here so that the dungeon
 	#can determine the sprites for these things.
@@ -45,12 +45,13 @@ func _on_ProceduralMazeLevel_addEntrance(position: Vector2):
 	entranceContainer.add_child(entrance)
 
 func _on_exit_dungeon(body):
-	print("popup exit confirmation")
-	confirm_exit();
-
-func confirm_exit():
 	print("show exit dungeon confirmation")
-	$CanvasLayer/ConfirmExit.popup_centered()  # FIXME doesn't pop up
+	$CanvasLayer/ConfirmExit.popup_centered()  # FIXME doesn't pop upw
+	
+func _on_ConfirmExit_confirmed():
+	print("clicked okay on exit")
+	GameManager.change_scene(GameManager.OVERWORLD_SCENE)
+	GameManager.level = 0
 
 func _on_ProceduralMazeLevel_addExits(positions):
 	for position in positions:
@@ -60,7 +61,7 @@ func _on_ProceduralMazeLevel_addExits(positions):
 		exitsContainer.add_child(exit)
 
 #accepts an RNG to use so that we can use a seeded RNG for the specific dungeon level.
-#this ensures consistancy based on the world, dunegon and entrance seed from visit to visit.
+#this ensures consistancy based on the world, dunegon and entrance seed from vidsit to visit.
 func _on_ProceduralMazeLevel_addTreasure(positions, rng: RandomNumberGenerator):
 	if (mapMaker.treasureOptions.size() > 0):
 		var filteredOptions = getValidArrayIndexes(GameManager.level, mapMaker.treasureSpawnLevels)
@@ -91,12 +92,6 @@ func getValidArrayIndexes(var level: int, var levelList):
 			validIndex.push_back(n)
 	return validIndex
 
-
-func _on_ConfirmExit_confirmed():
-	GameManager.change_scene(GameManager.OVERWORLD_SCENE)
-	var player = $SpriteLayer/Player
-	GameManager.level = 0
-	
 func setBaseDungeonInfo(info: String):	
 	baseDungeonInfo = info
 	var exits = exitsContainer.get_children()
